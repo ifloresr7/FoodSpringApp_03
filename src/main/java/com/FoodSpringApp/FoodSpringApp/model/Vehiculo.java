@@ -10,7 +10,18 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "vehiculo")
 public class Vehiculo {
-   
+  /* 
+    * 
+id	int(11)
+color	varchar(255)
+marca	varchar(255)
+matricula	varchar(10)
+puertas	int(11)
+autonomia_km	int(11)
+potencia_cv	int(11)
+   */
+  
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,12 +35,25 @@ public class Vehiculo {
 
     @Column(name = "puertas", nullable = false)
     private int puertas;
- 
+
+    @Column(name = "matricula", nullable = false)
+    private String matricula;
+
     @Column(name = "autonomia_km", nullable = false)
     private int autonomia_km;
 
     @Column(name = "potencia_cv", nullable = false)
     private int potencia_cv;
+
+
+    
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
     public int getId() {
         return id;
