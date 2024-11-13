@@ -19,7 +19,7 @@ public class AppController {
     @Autowired
     private VehiculoService vehiculoService;
 
-    private String version = "2024.11.08.17.35";
+    private String version = "2024.11.13.17.26";
 
     @GetMapping("/")
     public String homePage(Model model) {
@@ -58,5 +58,15 @@ public class AppController {
         model.addAttribute("description", "Aquí puedes ver todos los alquileres.");
         model.addAttribute("currentPage", "alquileres");
         return "alquileres";
+    }
+
+    @GetMapping("/login")
+    public String loginPage(Model model) {
+        model.addAttribute("version", this.version);
+        model.addAttribute("alquileres", alquilerService.obtenerTodosAlquileres());
+        model.addAttribute("title", "Login");
+        model.addAttribute("description", "Inicia sesión.");
+        model.addAttribute("currentPage", "login");
+        return "login";
     }
 }
