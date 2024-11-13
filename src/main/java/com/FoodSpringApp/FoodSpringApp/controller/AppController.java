@@ -1,6 +1,8 @@
 package com.FoodSpringApp.FoodSpringApp.controller;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ public class AppController {
         model.addAttribute("title", "Página de Inicio");
         model.addAttribute("description", "¡Bienvenido a FoodSpringApp!");
         model.addAttribute("currentPage", "home");
+        model.addAttribute("role", obtenerRoleDeUsuario());
         return "home";
     }
     
@@ -37,6 +40,7 @@ public class AppController {
         model.addAttribute("title", "Gestión de Vehículos");
         model.addAttribute("description", "Aquí puedes ver todos los vehículos.");
         model.addAttribute("currentPage", "vehiculos");
+        model.addAttribute("role", obtenerRoleDeUsuario());
         return "vehiculos";
     }
     
@@ -47,6 +51,7 @@ public class AppController {
         model.addAttribute("title", "Clientes");
         model.addAttribute("description", "Aquí puedes ver todos los clientes.");
         model.addAttribute("currentPage", "clientes");
+        model.addAttribute("role", obtenerRoleDeUsuario());
         return "clientes";
     }
     
@@ -57,9 +62,10 @@ public class AppController {
         model.addAttribute("title", "Alquileres");
         model.addAttribute("description", "Aquí puedes ver todos los alquileres.");
         model.addAttribute("currentPage", "alquileres");
+        model.addAttribute("role", obtenerRoleDeUsuario());
         return "alquileres";
     }
-
+    
     @GetMapping("/login")
     public String loginPage(Model model) {
         model.addAttribute("version", this.version);
@@ -67,6 +73,20 @@ public class AppController {
         model.addAttribute("title", "Login");
         model.addAttribute("description", "Inicia sesión.");
         model.addAttribute("currentPage", "login");
+        model.addAttribute("role", obtenerRoleDeUsuario());
         return "login";
+    }
+
+    private String obtenerRoleDeUsuario() {
+        org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String role = "ROLE_ANONYMOUS";
+    
+        if (authentication != null && authentication.isAuthenticated()) {
+            role = authentication.getAuthorities().stream()
+                    .map(grantedAuthority -> grantedAuthority.getAuthority())
+                    .findFirst()
+                    .orElse("ROLE_ANONYMOUS");
+        }
+        return role;
     }
 }
