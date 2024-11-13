@@ -19,7 +19,7 @@ public class AppController {
     @Autowired
     private VehiculoService vehiculoService;
 
-    private String version = "2024.11.13.17.26";
+    private String version = "2024.11.13.18.07";
 
     @GetMapping("/")
     public String homePage(Model model) {
