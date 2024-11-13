@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
     <meta name="description" th:content="${description}" />
     <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
 </head>
+
 <body id="loginPage">
-    <div th:replace="~{fragments/header}"></div> 
+    <div th:replace="~{fragments/header}"></div>
     <main class="content">
         <div class="login-container">
             <h2>Login</h2>
             <form th:action="@{/login}" method="post">
                 <div class="form-group">
-                    <label for="username">Username:</label>
+                    <label for="username">Email:</label>
                     <input type="text" id="username" name="username" required />
                 </div>
                 <div class="form-group">
@@ -24,11 +26,12 @@
                     <button type="submit">Login</button>
                 </div>
                 <div class="form-group">
-                    <p th:if="${error}" class="error">Invalid username or password</p>
+                    <p th:if="${param.error}" class="error">Los datos no son correctos.</p>
                 </div>
             </form>
         </div>
     </main>
     <div th:replace="~{fragments/footer}"></div>
 </body>
+
 </html>
