@@ -1,4 +1,4 @@
-let clientesList;
+let usuariosList;
 const dialogCliente = document.getElementById('usuarioModal');
 const diClienteId = document.getElementById('diUsuarioId');
 const diNombre = document.getElementById('diNombre');
@@ -8,11 +8,11 @@ const diTelefono = document.getElementById('diTelefono');
 const diDireccion = document.getElementById('diDireccion');
 
 // Función para cargar clientes
-function cargarClientes() {
+function cargarUsuarios() {
     fetch('/api/usuarios')
         .then(response => response.json())
         .then(usuarios => {
-            const tableBody = document.getElementById('clientesTable');
+            const tableBody = document.getElementById('usuariosTable');
             tableBody.innerHTML = '';
             usuariosList = usuarios;
             usuarios.forEach(usuario => {
@@ -45,14 +45,14 @@ function createFunctionalityButton() {
     document.querySelectorAll('.editButton').forEach(button => {
         button.addEventListener('click', function () {
             const id = this.closest('tr').getAttribute('data-id');
-            const cliente = clientesList.find(cliente => cliente.id === parseInt(id, 10));
-            if (cliente) {
-                diClienteId.value = cliente.id;
-                diNombre.value = cliente.nombre;
-                diApellidos.value = cliente.apellidos;
-                diEmail.value = cliente.email;
-                diTelefono.value = cliente.telefono;
-                diDireccion.value = cliente.direccion;
+            const usuario = usuariosList.find(usuario => usuario.id === parseInt(id, 10));
+            if (usuario) {
+                diUsuarioId.value = usuario.id;
+                diNombre.value = usuario.nombre;
+                diApellidos.value = usuario.apellidos;
+                diEmail.value = usuario.email;
+                diTelefono.value = usuario.telefono;
+                diDireccion.value = usuario.direccion;
                 dialogCliente.showModal();
             }
         });
@@ -61,12 +61,12 @@ function createFunctionalityButton() {
     document.querySelectorAll('.deleteButton').forEach(button => {
         button.addEventListener('click', function () {
             const id = this.closest('tr').getAttribute('data-id');
-            eliminarCliente(id);
+            eliminarUsuario(id);
         });
     });
 
     document.querySelector('.createButton').addEventListener('click', function () {
-        diClienteId.value = "";
+        diUsuarioId.value = "";
         diNombre.value = "";
         diApellidos.value = "";
         diEmail.value = "";
@@ -77,18 +77,18 @@ function createFunctionalityButton() {
 }
 
 // Función para guardar o actualizar un cliente
-document.getElementById('clienteForm').addEventListener('submit', function(e) {
+document.getElementById('usuarioForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const clienteData = {
-        id: diClienteId.value,
+    const usuarioData = {
+        id: diUsuarioId.value,
         nombre: diNombre.value,
         apellidos: diApellidos.value,
         email: diEmail.value,
         telefono: diTelefono.value,
         direccion: diDireccion.value
     };
-    const method = clienteData.id ? 'PUT' : 'POST';
-    const url = clienteData.id ? `/api/clientes/${clienteData.id}` : '/api/clientes';
+    const method = usuarioData.id ? 'PUT' : 'POST';
+    const url = usuarioData.emailid ? `/api/usuarios/${clienteData.id}` : '/api/usuarios';
 
     fetch(url, {
         method: method,
@@ -97,24 +97,24 @@ document.getElementById('clienteForm').addEventListener('submit', function(e) {
     })
     .then(response => response.json())
     .then(data => {
-        alert('Cliente creado/actualizado correctamente');
+        alert('Usuario creado/actualizado correctamente');
         dialogCliente.close();
-        cargarClientes();
+        cargarUsuarios();
     })
     .catch(error => console.error('Error al guardar el cliente:', error));
 });
 
 // Función para eliminar un cliente
-function eliminarCliente(id) {
-    if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
-        fetch(`/api/clientes/eliminar/${id}`, {
+function eliminarUsuario(id) {
+    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+        fetch(`/api/usuarios/eliminar/${id}`, {
             method: 'DELETE',
         })
         .then(() => {
-            alert('Cliente eliminado correctamente');
-            cargarClientes(); // Refresca la lista de clientes
+            alert('Usuario eliminado correctamente');
+            cargarUsuarios(); // Refresca la lista de clientes
         })
-        .catch(error => console.error('Error al eliminar el cliente:', error));
+        .catch(error => console.error('Error al eliminar el usuario:', error));
     }
 }
 

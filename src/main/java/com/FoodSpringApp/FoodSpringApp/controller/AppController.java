@@ -15,7 +15,7 @@ public class AppController {
     @Autowired
     private AlquilerService alquilerService;
     @Autowired
-    private UsuarioService clienteService;
+    private UsuarioService usuarioService;
     @Autowired
     private VehiculoService vehiculoService;
 
@@ -40,11 +40,11 @@ public class AppController {
         return "vehiculos";
     }
     
-    @GetMapping("/clientes")
+    @GetMapping("/usuarios")
     public String clientesPage(Model model) {
         model.addAttribute("version", this.version);
-        model.addAttribute("clientes", clienteService.obtenerTodosClientes());
-        model.addAttribute("title", "Clientes");
+        model.addAttribute("clientes", usuarioService.obtenerTodosClientes());
+        model.addAttribute("title", "Usuarios");
         model.addAttribute("description", "Aquí puedes ver todos los clientes.");
         model.addAttribute("currentPage", "clientes");
         return "clientes";
