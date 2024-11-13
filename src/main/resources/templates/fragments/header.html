@@ -8,6 +8,7 @@
             </div>
             <nav>
                 <ul>
+                    
                     <li>
                         <a th:class="${currentPage == 'vehiculos' ? 'active' : ''}" th:href="@{/vehiculos}">Vehículos</a>
                     </li>
@@ -18,7 +19,7 @@
                         <a th:class="${currentPage == 'alquileres' ? 'active' : ''}" th:href="@{/alquileres}">Alquileres</a>
                     </li>
                 </ul>
-                <a th:class="${currentPage == 'alquileres' ? 'active' : ''}" class="loginLink" th:href="@{/login}">Login</a>
+                <a th:class="loginLink" th:classappend="${currentPage == 'alquileres' ? ' active' : ''}" th:href="@{/login}">Login</a>
             </nav>            
         </div>
     </div>
