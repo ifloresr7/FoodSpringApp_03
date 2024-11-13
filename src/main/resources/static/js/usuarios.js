@@ -1,6 +1,6 @@
 let clientesList;
-const dialogCliente = document.getElementById('clienteModal');
-const diClienteId = document.getElementById('diClienteId');
+const dialogCliente = document.getElementById('usuarioModal');
+const diClienteId = document.getElementById('diUsuarioId');
 const diNombre = document.getElementById('diNombre');
 const diApellidos = document.getElementById('diApellidos');
 const diEmail = document.getElementById('diEmail');
@@ -9,19 +9,19 @@ const diDireccion = document.getElementById('diDireccion');
 
 // Función para cargar clientes
 function cargarClientes() {
-    fetch('/api/clientes')
+    fetch('/api/usuarios')
         .then(response => response.json())
-        .then(clientes => {
+        .then(usuarios => {
             const tableBody = document.getElementById('clientesTable');
             tableBody.innerHTML = '';
-            clientesList = clientes;
-            clientes.forEach(cliente => {
-                const row = `<tr data-id="${cliente.id}">
-                    <td>${cliente.id}</td>
-                    <td>${cliente.nombre} ${cliente.apellidos}</td>
-                    <td>${cliente.email}</td>
-                    <td>${cliente.telefono}</td>
-                    <td>${cliente.direccion}</td>
+            usuariosList = usuarios;
+            usuarios.forEach(usuario => {
+                const row = `<tr data-id="${usuario.id}">
+                    <td>${usuario.id}</td>
+                    <td>${usuario.nombre} ${usuario.apellidos}</td>
+                    <td>${usuario.email}</td>
+                    <td>${usuario.telefono}</td>
+                    <td>${usuario.direccion}</td>
                     <td>
                         <button class="editButton">Editar</button>
                         <button class="deleteButton">Eliminar</button>
