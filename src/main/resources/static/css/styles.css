@@ -20,6 +20,12 @@ body {
     user-select: none;
 }
 
+#landingPage{
+    background-image: url(/images/Background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 input, button, textarea, select {
     font: inherit;
 }
