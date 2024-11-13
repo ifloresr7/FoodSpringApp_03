@@ -21,7 +21,7 @@ public class AppController {
     @Autowired
     private VehiculoService vehiculoService;
 
-    private String version = "2024.11.13.18.07";
+    private String version = "2024.11.13.18.45";
 
     @GetMapping("/")
     public String homePage(Model model) {
@@ -52,7 +52,7 @@ public class AppController {
         model.addAttribute("description", "Aquí puedes ver todos los clientes.");
         model.addAttribute("currentPage", "clientes");
         model.addAttribute("role", obtenerRoleDeUsuario());
-        return "clientes";
+        return "usuarios";
     }
     
     @GetMapping("/alquileres")
