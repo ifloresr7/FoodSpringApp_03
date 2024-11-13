@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.FoodSpringApp.FoodSpringApp.service.AlquilerService;
-import com.FoodSpringApp.FoodSpringApp.service.ClienteService;
+import com.FoodSpringApp.FoodSpringApp.service.UsuarioService;
 import com.FoodSpringApp.FoodSpringApp.service.VehiculoService;
 
 @Controller
@@ -17,7 +17,7 @@ public class AppController {
     @Autowired
     private AlquilerService alquilerService;
     @Autowired
-    private ClienteService clienteService;
+    private UsuarioService clienteService;
     @Autowired
     private VehiculoService vehiculoService;
 

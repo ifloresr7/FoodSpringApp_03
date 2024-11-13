@@ -3,8 +3,8 @@ package com.FoodSpringApp.FoodSpringApp.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "cliente")
-public class Cliente {
+@Table(name = "usuario")
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,6 +25,12 @@ public class Cliente {
     @Column(name = "direccion", nullable = false)
     private String direccion;
 
+    @Column(name = "tipo", nullable = false)
+    private String tipo;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
     // Getters y Setters
     public int getId() {
         return id;
@@ -33,7 +39,22 @@ public class Cliente {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getTipo () {
+        return tipo;
+    }
+
+    public String setTipo(String tipo) {
+        return this.tipo = tipo;
+    }
+
+    public String getPassword () {
+        return password;
+    }
     
+    public String setPassword (String password) {
+        return this.password;
+    }
     public String getNombre() {
         return nombre;
     }
@@ -73,4 +94,6 @@ public class Cliente {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
+
 }

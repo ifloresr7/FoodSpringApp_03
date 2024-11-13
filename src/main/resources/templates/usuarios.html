@@ -12,8 +12,8 @@
 
     <!-- Contenido principal -->
     <main class="content">
-        <h1 th:text="${title}">Clientes</h1>
-        <button class="createButton">Añadir nuevo cliente</button>
+        <h1 th:text="${title}">Usuarios</h1>
+        <button class="createButton">Añadir nuevo usuario</button>
         <!-- Tabla de clientes -->
         <table>
             <thead>
@@ -34,11 +34,11 @@
     </main>
 
     <!-- DialogCliente -->
-    <dialog id="clienteModal">
+    <dialog id="usuarioModal">
         <span class="closeButtonModal close">&times;</span>
-        <h2 id="modalTitle">Agregar / Actualiza a un cliente</h2>
+        <h2 id="modalTitle">Agregar / Actualiza un cliente </h2>
         <form id="clienteForm" type="put">
-            <input type="hidden" id="diClienteId" />
+            <input type="hidden" id="diUsuarioId" />
             <label>Nombre: <input type="text" id="diNombre" required /></label><br>
             <label>Apellidos: <input type="text" id="diApellidos" required /></label><br>
             <label>Email: <input type="email" id="diEmail" required /></label><br>
