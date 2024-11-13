@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Gestión de Clientes</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
+    <script th:src="@{/js/clientes.js(v=${version})}" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <div th:replace="~{fragments/header}"></div>
+
+    <!-- Contenido principal -->
+    <main class="content">
+        <h1 th:text="${title}">Clientes</h1>
+        <button class="createButton">Añadir nuevo cliente</button>
+        <!-- Tabla de clientes -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Completo</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="clientesTable">
+                <!-- Aquí se cargarán los clientes mediante JavaScript -->
+            </tbody>
+        </table>
+        
+    </main>
+
+    <!-- DialogCliente -->
+    <dialog id="clienteModal">
+        <span class="closeButtonModal close">&times;</span>
+        <h2 id="modalTitle">Agregar / Actualiza a un cliente</h2>
+        <form id="clienteForm" type="put">
+            <input type="hidden" id="diClienteId" />
+            <label>Nombre: <input type="text" id="diNombre" required /></label><br>
+            <label>Apellidos: <input type="text" id="diApellidos" required /></label><br>
+            <label>Email: <input type="email" id="diEmail" required /></label><br>
+            <label>Teléfono: <input type="text" id="diTelefono" required /></label><br>
+            <label>Dirección: <input type="text" id="diDireccion" required /></label><br>
+            <button type="submit">Crea / Actualiza</button>
+            <button class="closeButtonModal">Cerrar</button>
+        </form>
+    </dialog>
+
+    <div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

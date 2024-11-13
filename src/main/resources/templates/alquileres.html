@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Título por Defecto</title>
+    <meta name="description" th:content="${description}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
+    <script th:src="@{/js/alquileres.js(v=${version})}"></script>
+</head>
+<body>
+    <div th:replace="~{fragments/header}"></div> 
+    <main class="content">
+        <h1 th:text="${title}">Título de la Página</h1>
+        <p th:text="${description}">Descripción de la página.</p>
+        <button class="createButton">Crear nuevo alquiler</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente ID</th>
+                    <th>Vehículo ID</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Fin</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="alquileresTable">
+                <tr th:each="alquiler: ${alquileres}">
+                    <td th:text="${alquiler.id}"></td>
+                    <td th:text="${alquiler.clienteId}"></td>
+                    <td th:text="${alquiler.vehiculoId}"></td>
+                    <td th:text="${alquiler.fechaInicio}"></td>
+                    <td th:text="${alquiler.fechaFin}"></td>
+                    <td th:text="${alquiler.precio}"></td>
+                    <td>
+                        <button class="editButton">Editar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+            
+    </main>
+    <dialog id="AlquilerDialog">
+        <form id="formAlquiler">
+
+            <div>
+                <button type="submit">Crea / Actualiza</button>
+                <button class="closeButtonModal">Cerrar</button>
+            </div>
+        </form>
+    </dialog>
+    <div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

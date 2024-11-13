@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Título por Defecto</title>
+    <meta name="description" th:content="${description}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
+</head>
+<body>
+    <div th:replace="~{fragments/header}"></div> 
+    <main class="content">
+        <h1 th:text="${title}">Título de la Página</h1>
+        <p th:text="${description}">Descripción de la página.</p>
+    </main>
+    <div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

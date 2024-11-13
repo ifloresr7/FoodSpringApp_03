@@ -1,0 +1,24 @@
+<header>
+    <div class="wrapperPage">
+        <div class="bar">
+            <div class="logo">
+                <a th:href="@{/}">
+                    <img th:src="@{/images/logo.png}" alt="Logo de FoodSpringApp" />
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a th:class="${currentPage == 'vehiculos' ? 'active' : ''}" th:href="@{/vehiculos}">Vehículos</a>
+                    </li>
+                    <li>
+                        <a th:class="${currentPage == 'clientes' ? 'active' : ''}" th:href="@{/clientes}">Clientes</a>
+                    </li>
+                    <li>
+                        <a th:class="${currentPage == 'alquileres' ? 'active' : ''}" th:href="@{/alquileres}">Alquileres</a>
+                    </li>
+                </ul>
+            </nav>            
+        </div>
+    </div>
+</header>
