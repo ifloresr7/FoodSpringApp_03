@@ -16,6 +16,9 @@ public class Usuario {
     @Column(name = "apellidos", nullable = false)
     private String apellidos;
 
+    @Column(name = "dni", nullable = false)
+    private String dni;
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
@@ -25,13 +28,12 @@ public class Usuario {
     @Column(name = "direccion", nullable = false)
     private String direccion;
 
-    @Column(name = "tipo", nullable = false)
-    private String tipo;
+    @Column(name = "role", nullable = false)
+    private String role;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -40,60 +42,70 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getTipo () {
-        return tipo;
-    }
-
-    public String setTipo(String tipo) {
-        return this.tipo = tipo;
-    }
-
-    public String getPassword () {
-        return password;
-    }
-    
-    public String setPassword (String password) {
-        return this.password;
-    }
     public String getNombre() {
         return nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    public String getApellidos() {
+        return apellidos;
+    }
+
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
+    public String getRole() {
+        return role;
+    }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    // Getters y Setters
+    
 }

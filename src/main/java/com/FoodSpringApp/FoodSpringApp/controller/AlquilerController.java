@@ -26,8 +26,8 @@ public class AlquilerController {
     }
 
     @GetMapping("/friendly")
-    public ResponseEntity<List<Object[]>> obtenerTodosAlquileress() {
-        List<Object[]> alquileres = alquilerService.obtenerTodosAlquileresFriendly();
+    public ResponseEntity<List<Alquiler>> obtenerTodosAlquileress() {
+        List<Alquiler> alquileres = alquilerService.obtenerTodosAlquileres();
         return ResponseEntity.ok(alquileres);
     }
 }

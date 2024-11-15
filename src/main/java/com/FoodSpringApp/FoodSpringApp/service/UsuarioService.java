@@ -22,20 +22,21 @@ public class UsuarioService  implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByUsername(username);
-
+    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepository.findByDni(dni);
+    
         if (usuario == null) {
-            throw new UsernameNotFoundException("Usuario no encontrado: " + username);
+            throw new UsernameNotFoundException("Usuario no encontrado con DNI: " + dni);
         }
-
-        // Aquí se configura el usuario con los roles desde la base de datos
+    
+        // Configura el usuario con los roles obtenidos desde la base de datos
         return User.builder()
-                .username(usuario.getNombre())
-                .password(usuario.getPassword())  // Contraseña ya debería estar encriptada
-                .roles(usuario.getTipo())  // Asigna el rol del usuario desde la base de datos
+                .username(usuario.getDni())
+                .password(usuario.getPassword())  // Asegúrate de que la contraseña esté encriptada
+                .roles(usuario.getRole())         // Asigna el rol del usuario desde la base de datos
                 .build();
     }
+    
 
     public List<Usuario> obtenerTodosClientes() {
         return usuarioRepository.findAll();
