@@ -11,12 +11,14 @@ public class SeguridadController {
     public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/vehiculos", "/login","/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                .requestMatchers("/", "/vehiculos", "/login","/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/alquileres").authenticated()
                 .requestMatchers("/admin","/clientes").hasRole("ADMIN")
             )
             .formLogin((form) -> form
                 .loginPage("/login")
+                .usernameParameter("dni")
+                .passwordParameter("password")
                 .permitAll()
                 .failureUrl("/login?error=true")
             )
