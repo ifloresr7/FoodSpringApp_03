@@ -11,7 +11,7 @@ public class SeguridadController {
     public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/vehiculos", "/login","/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/vehiculos", "/login", "/registro", "/css/**", "/js/**", "/images/**","/api/**").permitAll()
                 .requestMatchers("/alquileres").authenticated()
                 .requestMatchers("/admin","/clientes").hasRole("ADMIN")
             )

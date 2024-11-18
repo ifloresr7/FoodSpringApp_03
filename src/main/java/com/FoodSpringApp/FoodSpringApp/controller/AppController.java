@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.FoodSpringApp.FoodSpringApp.model.Usuario;
 import com.FoodSpringApp.FoodSpringApp.service.AlquilerService;
 import com.FoodSpringApp.FoodSpringApp.service.UsuarioService;
 import com.FoodSpringApp.FoodSpringApp.service.VehiculoService;
@@ -68,7 +69,6 @@ public class AppController {
     @GetMapping("/login")
     public String loginPage(Model model) {
         model.addAttribute("version", this.version);
-        model.addAttribute("alquileres", alquilerService.obtenerTodosAlquileres());
         model.addAttribute("title", "Login");
         model.addAttribute("description", "Inicia sesión.");
         model.addAttribute("currentPage", "login");
@@ -76,10 +76,20 @@ public class AppController {
         return "login";
     }
 
+    @GetMapping("/registro")
+    public String registroPage(Model model) {
+        model.addAttribute("usuario", new Usuario());
+        model.addAttribute("version", this.version);
+        model.addAttribute("title", "Registro");
+        model.addAttribute("description", "Registrate.");
+        model.addAttribute("currentPage", "registro");
+        model.addAttribute("role", obtenerRoleDeUsuario());
+        return "registro";
+    }
+
     private String obtenerRoleDeUsuario() {
         org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String role = "ROLE_ANONYMOUS";
-    
         if (authentication != null && authentication.isAuthenticated()) {
             role = authentication.getAuthorities().stream()
                     .map(grantedAuthority -> grantedAuthority.getAuthority())

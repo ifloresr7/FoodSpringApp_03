@@ -20,6 +20,7 @@
                 </ul>
                 <a th:class="loginLink" th:if="${role == 'ROLE_ANONYMOUS'}" th:href="@{/login}">Login</a>
                 <a th:class="loginOutLink" th:if="${role != 'ROLE_ANONYMOUS'}" th:href="@{/logout}">Cerrar Sesión</a>
+                <a th:href="@{/registro}">Registrate</a>
             </nav>            
         </div>
     </div>
