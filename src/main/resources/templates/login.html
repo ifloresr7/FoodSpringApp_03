@@ -26,7 +26,8 @@
                     <button type="submit">Login</button>
                 </div>
                 <div class="form-group">
-                    <p th:if="${param.error}" class="error">Los datos no son correctos.</p>
+                    <p th:if="${param.error}" class="error">DATOS NO CORRECTOS</p>
+                    <p th:if="${param.logout}" class="error">CERRASTE LA SESIÓN</p>
                 </div>
             </form>
         </div>

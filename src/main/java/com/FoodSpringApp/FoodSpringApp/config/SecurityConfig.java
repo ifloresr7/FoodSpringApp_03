@@ -26,18 +26,23 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/", "/vehiculos", "/login", "/registro", "/css/**", "/js/**", "/images/**", "/webjars/**","/api/**").permitAll()
-                .requestMatchers("/alquileres").authenticated()
-                .requestMatchers("/admin", "/clientes").hasRole("ADMIN")
+                .requestMatchers("/mis-alquileres","/mi-perfil").authenticated()
+                .requestMatchers("/alquileres", "/clientes").hasRole("ADMIN")
             )
             .formLogin((form) -> form
             .loginPage("/login")
                 .usernameParameter("dni")
                 .passwordParameter("password")
                 .permitAll()
-                .failureUrl("/login?error=true")
+                .failureUrl("/login?error")
             )
-            .logout((logout) -> logout.permitAll());
-        
+            .logout((logout) -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .permitAll()
+            );
         return http.build();
     }
 }
