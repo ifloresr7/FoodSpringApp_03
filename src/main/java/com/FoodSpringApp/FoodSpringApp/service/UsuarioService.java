@@ -25,21 +25,26 @@ public class UsuarioService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
-        System.out.println("Valor recibido en loadUserByUsername: " + dni);
+public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
+    System.out.println("Valor recibido: [" + dni + "] (longitud: " + dni.length() + ")");
+    Usuario usuario = usuarioRepository.findByDni(dni);
 
-        Usuario usuario = usuarioRepository.findByDni(dni);
-
-        if (usuario == null) {
-            throw new UsernameNotFoundException("Usuario no encontrado con DNI: " + dni);
-        }
-
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(usuario.getDni())
-                .password(usuario.getPassword())
-                .roles(usuario.getRole())
-                .build();
+    if (usuario == null) {
+        System.out.println("Usuario no encontrado para DNI: [" + dni + "]");
+        throw new UsernameNotFoundException("Usuario no encontrado con DNI: " + dni);
     }
+
+    System.out.println("Usuario encontrado: " + usuario.getDni());
+    System.out.println("Contraseña en la base de datos: " + usuario.getPassword());
+    System.out.println("Rol: " + usuario.getRole());
+
+    return org.springframework.security.core.userdetails.User.builder()
+            .username(usuario.getDni())
+            .password(usuario.getPassword())
+            .roles(usuario.getRole()) // Elimina "ROLE_" aquí
+            .build();
+}
+
 
     public Usuario save(Usuario usuario) {
         String encryptedPassword = passwordEncoder.encode(usuario.getPassword());
