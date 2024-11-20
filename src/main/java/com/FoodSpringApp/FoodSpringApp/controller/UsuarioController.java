@@ -43,7 +43,7 @@ public class UsuarioController {
         Map<String, String> response = new HashMap<>();
         logger.info("Nuevo Usuario recibido: {}", usuario.getNombre());  // Log info
         try {
-            usuario.setRole("ROLE_USER");
+            usuario.setRole("USER");
             Usuario nuevoUsuario = usuarioService.save(usuario);
             response.put("message", "Usuario registrado con éxito.");
             return ResponseEntity.ok(response);
