@@ -9,19 +9,40 @@
             <nav>
                 <ul>
                     <li>
-                        <a th:class="${currentPage == 'vehiculos' ? 'active' : ''}" th:href="@{/vehiculos}">Vehículos</a>
+                        <a th:class="${currentPage == 'vehiculos' ? 'active' : ''}" th:href="@{/vehiculos}">Nuestros vehiculos</a>
                     </li>
-                    <li th:if="${role == 'ROLE_ADMIN'}">
-                        <a th:class="${currentPage == 'clientes' ? 'active' : ''}" th:href="@{/clientes}">Clientes</a>
+                    <li th:if="${role eq 'ROLE_ANONYMOUS'}">
+                        <a th:class="loginLink" th:href="@{/login}">Login</a>
                     </li>
-                    <li th:if="${role == 'ROLE_ADMIN' or role == 'ROLE_USER'}">
-                        <a th:class="${currentPage == 'alquileres' ? 'active' : ''}" th:href="@{/alquileres}">Alquileres</a>
+                    <li th:if="${role eq 'ROLE_ANONYMOUS'}">
+                        <a th:href="@{/registro}">Registrate</a>
                     </li>
                 </ul>
-                <a th:class="loginLink" th:if="${role == 'ROLE_ANONYMOUS'}" th:href="@{/login}">Login</a>
-                <a th:class="loginOutLink" th:if="${role != 'ROLE_ANONYMOUS'}" th:href="@{/logout}">Cerrar Sesión</a>
-                <a th:href="@{/registro}">Registrate</a>
-            </nav>            
+            </nav>
         </div>
+        <nav th:if="${role == 'ROLE_ADMIN' or role == 'ROLE_USER'}" class="user_bar">
+            <ul>
+                <li th:if="${role == 'ROLE_ADMIN'}">
+                    <a th:class="${currentPage == 'gestion-usuarios' ? 'active' : ''}" th:href="@{/gestion-usuarios}">Gestión usuarios</a>
+                </li>
+                <li th:if="${role == 'ROLE_ADMIN'}">
+                    <a th:class="${currentPage == 'gestion-alquileres' ? 'active' : ''}" th:href="@{/gestion-alquileres}">Gestión alquileres</a>
+                </li>
+                <li th:if="${role == 'ROLE_ADMIN'}">
+                    <a th:class="${currentPage == 'gestion-vehiculos' ? 'active' : ''}" th:href="@{/gestion-vehiculos}">Gestión vehiculos</a>
+                </li>
+                <li>
+                    <a th:class="${currentPage == 'mis-alquileres' ? 'active' : ''}" th:href="@{/mis-alquileres}">Mis alquileres</a>
+                </li>
+                <li>
+                    <a th:class="${currentPage == 'mi-perfil' ? 'active' : ''}" th:href="@{/mi-perfil}">Mi perfil</a>
+                </li>
+                <li th:if="${role != 'ROLE_ANONYMOUS'}">
+                    <form action="#" th:action="@{/logout}" method="post">
+                        <button type="submit" th:class="loginOutLink">Cerrar Sesión</button>
+                    </form>                        
+                </li>
+            </ul>
+        </nav> 
     </div>
 </header>

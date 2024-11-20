@@ -1,13 +1,10 @@
 package com.FoodSpringApp.FoodSpringApp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.FoodSpringApp.FoodSpringApp.model.Usuario;
 import com.FoodSpringApp.FoodSpringApp.service.AlquilerService;
@@ -47,28 +44,61 @@ public class AppController {
         return "vehiculos";
     }
     
-    @GetMapping("/usuarios")
-    public String clientesPage(Model model) {
+    @GetMapping("/mi-perfil")
+    public String perfilPage(Model model) {
         model.addAttribute("version", this.version);
-        model.addAttribute("clientes", usuarioService.obtenerTodosClientes());
-        model.addAttribute("title", "Usuarios");
-        model.addAttribute("description", "Aquí puedes ver todos los clientes.");
-        model.addAttribute("currentPage", "clientes");
+        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
+        model.addAttribute("title", "Mi perfil");
+        model.addAttribute("description", "Información de mi perfil.");
+        model.addAttribute("currentPage", "mi-perfil");
         model.addAttribute("role", obtenerRoleDeUsuario());
-        return "usuarios";
+        return "mi_perfil";
     }
-    
-    @GetMapping("/alquileres")
+
+    @GetMapping("/mis-alquileres")
+    public String misAlquileresPage(Model model) {
+        model.addAttribute("version", this.version);
+        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
+        model.addAttribute("title", "Mis alquileres");
+        model.addAttribute("description", "Estos son todos mis alquileres.");
+        model.addAttribute("currentPage", "mis-alquileres");
+        model.addAttribute("role", obtenerRoleDeUsuario());
+        return "mis_alquileres";
+    }
+
+    @GetMapping("/gestion-alquileres")
     public String alquileresPage(Model model) {
         model.addAttribute("version", this.version);
         model.addAttribute("alquileres", alquilerService.obtenerTodosAlquileres());
-        model.addAttribute("title", "Alquileres");
+        model.addAttribute("title", "Gestión de alquileres");
         model.addAttribute("description", "Aquí puedes ver todos los alquileres.");
-        model.addAttribute("currentPage", "alquileres");
+        model.addAttribute("currentPage", "gestion-alquileres");
         model.addAttribute("role", obtenerRoleDeUsuario());
-        return "alquileres";
+        return "gestion_alquileres";
     }
-    
+
+    @GetMapping("/gestion-usuarios")
+    public String clientesPage(Model model) {
+        model.addAttribute("version", this.version);
+        model.addAttribute("clientes", usuarioService.obtenerTodosClientes());
+        model.addAttribute("title", "Gestión de clientes");
+        model.addAttribute("description", "Aquí puedes ver todos los clientes.");
+        model.addAttribute("currentPage", "gestion-usuarios");
+        model.addAttribute("role", obtenerRoleDeUsuario());
+        return "gestion_usuarios";
+    }
+
+    @GetMapping("/gestion-vehiculos")
+    public String gestionVehiculosPage(Model model) {
+        model.addAttribute("version", this.version);
+        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
+        model.addAttribute("title", "Gestión de Vehículos");
+        model.addAttribute("description", "Aquí puedes ver todos los vehículos.");
+        model.addAttribute("currentPage", "gestion-vehiculos");
+        model.addAttribute("role", obtenerRoleDeUsuario());
+        return "gestion_vehiculos";
+    }
+
     @GetMapping("/login")
     public String loginPage(Model model) {
         model.addAttribute("version", this.version);

@@ -25,16 +25,17 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             )
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/vehiculos", "/login", "/registro", "/css/**", "/js/**", "/images/**", "/webjars/**","/api/**").permitAll()
-                .requestMatchers("/mis-alquileres","/mi-perfil").authenticated()
-                .requestMatchers("/alquileres", "/clientes").hasRole("ADMIN")
+                .requestMatchers("/", "/vehiculos", "/login", "/logout", "/registro", "/css/**", "/js/**", "/images/**", "/webjars/**", "/api/**").permitAll()
+                .requestMatchers("/mis-alquileres", "/mi-perfil").authenticated()
+                .requestMatchers("/gestion-vehiculos","/gestion-usuarios","/gestion-alquileres").hasRole("ADMIN")
             )
             .formLogin((form) -> form
-            .loginPage("/login")
+                .loginPage("/login")
                 .usernameParameter("dni")
                 .passwordParameter("password")
                 .permitAll()
-                .failureUrl("/login?error")
+                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/", true)
             )
             .logout((logout) -> logout
                 .logoutUrl("/logout")
