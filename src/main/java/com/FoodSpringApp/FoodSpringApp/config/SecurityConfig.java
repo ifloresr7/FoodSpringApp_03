@@ -6,17 +6,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;  // Importar BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder;  // Importar PasswordEncoder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-    // Crear un PasswordEncoder como un Bean
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();  // Usamos BCryptPasswordEncoder para encriptar las contraseñas
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -32,7 +30,9 @@ public class SecurityConfig {
                 .requestMatchers("/admin", "/clientes").hasRole("ADMIN")
             )
             .formLogin((form) -> form
-                .loginPage("/login")
+            .loginPage("/login")
+                .usernameParameter("dni")
+                .passwordParameter("password")
                 .permitAll()
                 .failureUrl("/login?error=true")
             )
@@ -40,5 +40,4 @@ public class SecurityConfig {
         
         return http.build();
     }
-    
 }

@@ -1,14 +1,13 @@
 package com.FoodSpringApp.FoodSpringApp.service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;  // Importar PasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.FoodSpringApp.FoodSpringApp.model.Usuario;
@@ -17,25 +16,25 @@ import com.FoodSpringApp.FoodSpringApp.repository.UsuarioRepository;
 @Service
 public class UsuarioService implements UserDetailsService {
     @Autowired
-    private final UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
     @Autowired
-    private final PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
+        System.out.println("Valor recibido en loadUserByUsername: " + dni);
+
         Usuario usuario = usuarioRepository.findByDni(dni);
 
         if (usuario == null) {
             throw new UsernameNotFoundException("Usuario no encontrado con DNI: " + dni);
         }
 
-        return User.builder()
+        return org.springframework.security.core.userdetails.User.builder()
                 .username(usuario.getDni())
                 .password(usuario.getPassword())
                 .roles(usuario.getRole())
