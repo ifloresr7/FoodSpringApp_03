@@ -52,22 +52,21 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario update(int id, Usuario clienteData) {
-        Usuario usuario = findById(id);
-        if (usuario != null) {
-            usuario.setNombre(clienteData.getNombre());
-            usuario.setApellidos(clienteData.getApellidos());
-            usuario.setEmail(clienteData.getEmail());
-            usuario.setTelefono(clienteData.getTelefono());
-            usuario.setDireccion(clienteData.getDireccion());
-            if (clienteData.getPassword() != null && !clienteData.getPassword().isEmpty()) {
-                usuario.setPassword(passwordEncoder.encode(clienteData.getPassword()));
-            } else {
-                usuario.setPassword(usuario.getPassword());
-            }
-            return usuarioRepository.save(usuario);
+    public Usuario update(int id, Usuario usuarioData) {
+        Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
+        if (usuarioExistente == null) {
+            return null;
         }
-        return null;
+        if (usuarioData.getPassword() != null && !usuarioData.getPassword().isEmpty()) {
+            String nuevaContrasena = usuarioData.getPassword();
+            usuarioExistente.setPassword(passwordEncoder.encode(nuevaContrasena));
+        }
+        usuarioExistente.setNombre(usuarioData.getNombre());
+        usuarioExistente.setApellidos(usuarioData.getApellidos());
+        usuarioExistente.setEmail(usuarioData.getEmail());
+        usuarioExistente.setTelefono(usuarioData.getTelefono());
+        usuarioExistente.setDireccion(usuarioData.getDireccion());
+        return usuarioRepository.save(usuarioExistente);
     }
 
     public void deleteById(int id) {
@@ -76,5 +75,9 @@ public class UsuarioService implements UserDetailsService {
 
     public Usuario findById(int id) {
         return usuarioRepository.findById(id).orElse(null);
+    }
+
+    public Usuario obtenerUsuarioPorDni(String dni) {
+        return usuarioRepository.findByDni(dni);
     }
 }

@@ -10,6 +10,7 @@ import com.FoodSpringApp.FoodSpringApp.model.Usuario;
 import com.FoodSpringApp.FoodSpringApp.service.AlquilerService;
 import com.FoodSpringApp.FoodSpringApp.service.UsuarioService;
 import com.FoodSpringApp.FoodSpringApp.service.VehiculoService;
+import org.springframework.security.core.userdetails.User;
 
 @Controller
 public class AppController {
@@ -21,7 +22,7 @@ public class AppController {
     @Autowired
     private VehiculoService vehiculoService;
 
-    private String version = "2024.11.13.18.45";
+    private String version = "2024.11.21.18.20";
 
     @GetMapping("/")
     public String homePage(Model model) {
@@ -43,11 +44,19 @@ public class AppController {
         model.addAttribute("role", obtenerRoleDeUsuario());
         return "vehiculos";
     }
-    
+
     @GetMapping("/mi-perfil")
     public String perfilPage(Model model) {
+        String dni = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User) {
+            dni = ((User) principal).getUsername();
+        } else if (principal instanceof String) {
+            dni = principal.toString();
+        }
+        Usuario usuario = usuarioService.obtenerUsuarioPorDni(dni);
+        model.addAttribute("usuario", usuario);
         model.addAttribute("version", this.version);
-        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
         model.addAttribute("title", "Mi perfil");
         model.addAttribute("description", "Información de mi perfil.");
         model.addAttribute("currentPage", "mi-perfil");
@@ -58,7 +67,6 @@ public class AppController {
     @GetMapping("/mis-alquileres")
     public String misAlquileresPage(Model model) {
         model.addAttribute("version", this.version);
-        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
         model.addAttribute("title", "Mis alquileres");
         model.addAttribute("description", "Estos son todos mis alquileres.");
         model.addAttribute("currentPage", "mis-alquileres");
@@ -69,7 +77,6 @@ public class AppController {
     @GetMapping("/gestion-alquileres")
     public String alquileresPage(Model model) {
         model.addAttribute("version", this.version);
-        model.addAttribute("alquileres", alquilerService.obtenerTodosAlquileres());
         model.addAttribute("title", "Gestión de alquileres");
         model.addAttribute("description", "Aquí puedes ver todos los alquileres.");
         model.addAttribute("currentPage", "gestion-alquileres");
@@ -80,7 +87,6 @@ public class AppController {
     @GetMapping("/gestion-usuarios")
     public String clientesPage(Model model) {
         model.addAttribute("version", this.version);
-        model.addAttribute("clientes", usuarioService.obtenerTodosClientes());
         model.addAttribute("title", "Gestión de clientes");
         model.addAttribute("description", "Aquí puedes ver todos los clientes.");
         model.addAttribute("currentPage", "gestion-usuarios");
@@ -91,7 +97,6 @@ public class AppController {
     @GetMapping("/gestion-vehiculos")
     public String gestionVehiculosPage(Model model) {
         model.addAttribute("version", this.version);
-        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
         model.addAttribute("title", "Gestión de Vehículos");
         model.addAttribute("description", "Aquí puedes ver todos los vehículos.");
         model.addAttribute("currentPage", "gestion-vehiculos");

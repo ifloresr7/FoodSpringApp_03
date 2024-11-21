@@ -3,8 +3,8 @@ package com.FoodSpringApp.FoodSpringApp.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "usuario")
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -16,7 +16,7 @@ public class Usuario {
     @Column(name = "apellidos", nullable = false)
     private String apellidos;
 
-    @Column(name = "dni", nullable = false)
+    @Column(name = "dni", nullable = false, unique = true)
     private String dni;
 
     @Column(name = "email", nullable = false, unique = true)
@@ -34,6 +34,24 @@ public class Usuario {
     @Column(name = "password", nullable = false)
     private String password;
 
+    // Constructor sin parámetros
+    public Usuario() {}
+
+    // Constructor con parámetros
+    public Usuario(int id, String nombre, String apellidos, String dni, String email, String telefono, 
+                   String direccion, String role, String password) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.dni = dni;
+        this.email = email;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.role = role;
+        this.password = password;
+    }
+
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -94,7 +112,7 @@ public class Usuario {
         return role;
     }
 
-public void setRole(String role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
@@ -105,7 +123,4 @@ public void setRole(String role) {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    // Getters y Setters
-    
 }
