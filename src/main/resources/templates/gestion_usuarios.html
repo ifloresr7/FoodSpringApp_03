@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title th:text="${title}">Gestión de Usuarios</title>
     <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
-    <!-- script th:src="@{/js/gestionUsuarios.js(v=${version})}" defer></script -->
+ 
 </head>
 <body>
     <!-- Header -->
@@ -28,7 +28,6 @@
                 </tr>
             </thead>
             <tbody id="usuariosTable">
-                <!-- Aquí se cargarán los usuarios mediante JavaScript -->
                 <tr th:each="usuario: ${usuarios}">
                     <td th:text="${usuario.id}"></td>
                     <td th:text="${usuario.Nombre}"></td>

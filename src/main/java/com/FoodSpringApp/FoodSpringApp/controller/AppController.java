@@ -95,7 +95,7 @@ public class AppController {
     @GetMapping("/gestion-usuarios")
     public String usuariosPage(Model model) {
         model.addAttribute("version", this.version);
-        model.addAttribute("usuario", usuarioService.obtenerTodosUsuarios());
+        model.addAttribute("usuarios", usuarioService.obtenerTodosUsuarios());
         model.addAttribute("title", "Gestión de usuarios");
         model.addAttribute("description", "Aquí puedes ver todos los usuarios.");
         model.addAttribute("currentPage", "gestion-usuarios");
