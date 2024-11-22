@@ -2,7 +2,6 @@ package com.FoodSpringApp.FoodSpringApp.service;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -44,7 +43,7 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.save(usuario);
     }
 
-    public List<Usuario> obtenerTodosClientes() {
+    public List<Usuario> obtenerTodosUsuarios() {
         return usuarioRepository.findAll();
     }
 

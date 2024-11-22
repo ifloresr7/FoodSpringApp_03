@@ -4,15 +4,14 @@ package com.FoodSpringApp.FoodSpringApp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.FoodSpringApp.FoodSpringApp.model.Usuario;
-//import com.FoodSpringApp.FoodSpringApp.model.Vehiculo;
 import com.FoodSpringApp.FoodSpringApp.service.UsuarioService;
 import com.FoodSpringApp.FoodSpringApp.service.VehiculoService;
-import org.springframework.security.core.userdetails.User;
 
 @Controller
 public class AppController {
@@ -94,10 +93,11 @@ public class AppController {
     }
 
     @GetMapping("/gestion-usuarios")
-    public String clientesPage(Model model) {
+    public String UsuariosPage(Model model) {
         model.addAttribute("version", this.version);
-        model.addAttribute("title", "Gestión de clientes");
-        model.addAttribute("description", "Aquí puedes ver todos los clientes.");
+        model.addAttribute("usuario", usuarioService.obtenerTodosUsuarios());
+        model.addAttribute("title", "Gestión de usuarios");
+        model.addAttribute("description", "Aquí puedes ver todos los usuarios.");
         model.addAttribute("currentPage", "gestion-usuarios");
         model.addAttribute("role", obtenerRoleDeUsuario());
         return "gestion_usuarios";

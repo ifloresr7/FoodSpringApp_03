@@ -1,13 +1,14 @@
 let usuariosList;
-const dialogCliente = document.getElementById('usuarioModal');
-const diClienteId = document.getElementById('diUsuarioId');
+ 
+const dialogUsuario = document.getElementById('usuarioModal');
+const diUsuarioId = document.getElementById('diUsuarioId');
 const diNombre = document.getElementById('diNombre');
 const diApellidos = document.getElementById('diApellidos');
 const diEmail = document.getElementById('diEmail');
 const diTelefono = document.getElementById('diTelefono');
 const diDireccion = document.getElementById('diDireccion');
 
-// Función para cargar clientes
+// Función para cargar usuarios
 function cargarUsuarios() {
     fetch('/api/usuarios')
         .then(response => response.json())
@@ -38,7 +39,7 @@ function createFunctionalityButton() {
     document.querySelectorAll('.closeButtonModal').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
-            dialogCliente.close();
+            dialogUsario.close();
         });
     });
 
@@ -53,7 +54,7 @@ function createFunctionalityButton() {
                 diEmail.value = usuario.email;
                 diTelefono.value = usuario.telefono;
                 diDireccion.value = usuario.direccion;
-                dialogCliente.showModal();
+                dialogUsuario.showModal();
             }
         });
     });
@@ -72,11 +73,11 @@ function createFunctionalityButton() {
         diEmail.value = "";
         diTelefono.value = "";
         diDireccion.value = "";
-        dialogCliente.showModal();
+        dialogUsuario.showModal();
     });
 }
 
-// Función para guardar o actualizar un cliente
+// Función para guardar o actualizar un usuario
 document.getElementById('usuarioForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const usuarioData = {
@@ -88,23 +89,23 @@ document.getElementById('usuarioForm').addEventListener('submit', function(e) {
         direccion: diDireccion.value
     };
     const method = usuarioData.id ? 'PUT' : 'POST';
-    const url = usuarioData.emailid ? `/api/usuarios/${clienteData.id}` : '/api/usuarios';
+    const url = usuarioData.emailid ? `/api/usuarios/${usuarioData.id}` : '/api/usuarios';
 
     fetch(url, {
         method: method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(clienteData)
+        body: JSON.stringify(usuarioData)
     })
     .then(response => response.json())
     .then(data => {
         alert('Usuario creado/actualizado correctamente');
-        dialogCliente.close();
+        dialogUsuario.close();
         cargarUsuarios();
     })
-    .catch(error => console.error('Error al guardar el cliente:', error));
+    .catch(error => console.error('Error al guardar el usuario:', error));
 });
 
-// Función para eliminar un cliente
+// Función para eliminar un usuario
 function eliminarUsuario(id) {
     if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
         fetch(`/api/usuarios/eliminar/${id}`, {
@@ -112,12 +113,12 @@ function eliminarUsuario(id) {
         })
         .then(() => {
             alert('Usuario eliminado correctamente');
-            cargarUsuarios(); // Refresca la lista de clientes
+            cargarUsuarios(); // Refresca la lista de usuarios
         })
         .catch(error => console.error('Error al eliminar el usuario:', error));
     }
 }
 
 
-// Cargar clientes al iniciar
-document.addEventListener('DOMContentLoaded', cargarClientes);
+// Cargar usuarios al iniciar
+document.addEventListener('DOMContentLoaded', cargaUsuarios);

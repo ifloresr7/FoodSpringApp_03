@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${title}">Gestión de Clientes</title>
+    <title th:text="${title}">Gestión de Usuarios</title>
     <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
-    <script th:src="@{/js/gestionUsuarios.js(v=${version})}" defer></script>
+    <!-- script th:src="@{/js/gestionUsuarios.js(v=${version})}" defer></script -->
 </head>
 <body>
     <!-- Header -->
@@ -13,8 +13,7 @@
     <!-- Contenido principal -->
     <main class="content">
         <h1 th:text="${title}"></h1>
-        <p th:text="${description}"></p>
-        <p th:text="${usuario}"></p>
+        <p th:text="${description}"></p>       
         <button class="createButton">Añadir nuevo usuario</button>
         <!-- Tabla de usuarios -->
         <table>
@@ -33,10 +32,10 @@
                 <tr th:each="usuario: ${usuarios}">
                     <td th:text="${usuario.id}"></td>
                     <td th:text="${usuario.Nombre}"></td>
-                    <td th:text="${usuario.fechaInicio}"></td>
-                    <td th:text="${alquiler.fechaFin}"></td>
-                    <td th:text="${alquiler.Dirección}"></td>
-                    <td th:text="${usuario.Acciones}"></td>
+                    <td th:text="${usuario.email}"></td>
+                    <td th:text="${usuario.telefono}"></td>
+                    <td th:text="${usuario.direccion}"></td>
+                     
                     <td>
                         <button class="editButton">Editar</button>
                     </td>
@@ -46,11 +45,11 @@
         
     </main>
 
-    <!-- DialogCliente -->  
+    <!-- DialogUsuario -->  
     <dialog id="usuarioModal">
         <span class="closeButtonModal close">&times;</span>
         <h2 id="modalTitle">Agregar / Actualiza un Usuario </h2>
-        <form id="clienteForm" type="put">
+        <form id="usuarioForm" type="put">
             <input type="hidden" id="diUsuarioId" />
             <label>Nombre: <input type="text" id="diNombre" required /></label><br>
             <label>Apellidos: <input type="text" id="diApellidos" required /></label><br>
