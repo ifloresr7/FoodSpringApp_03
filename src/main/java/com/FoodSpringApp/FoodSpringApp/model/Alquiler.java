@@ -17,13 +17,13 @@ public class Alquiler {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private int id;
 
     @Column(name = "cliente_id", nullable = false)
-    private Long clienteId;
+    private int clienteId;
 
     @Column(name = "vehiculo_id", nullable = false)
-    private Long vehiculoId;
+    private int vehiculoId;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_fin", nullable = false)
@@ -36,15 +36,15 @@ public class Alquiler {
     @Column(name = "precio",nullable = false)
     private double precio;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public Long getClienteId() {
+    public int getClienteId() {
         return clienteId;
     }
 
-    public Long getVehiculoId() {
+    public int getVehiculoId() {
         return vehiculoId;
     }
 
@@ -60,11 +60,11 @@ public class Alquiler {
         return precio;
     }
 
-    public void setClienteId(Long clienteId) {
+    public void setClienteId(int clienteId) {
         this.clienteId = clienteId;
     }
 
-    public void setVehiculoId(Long vehiculoId) {
+    public void setVehiculoId(int vehiculoId) {
         this.vehiculoId = vehiculoId;
     }
 

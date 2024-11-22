@@ -13,7 +13,34 @@
         <h1 th:text="${title}"></h1>
         <p th:text="${description}"></p>
         <button class="createButton">Crear nuevo alquiler</button>
-        <table>
+        <div id="crearAlquilerDialog" class="hidden">
+            <div class="modal-content">
+                <form id="formCrearAlquiler">
+                    <h2>Crear nuevo alquiler</h2>
+                    <label for="clienteId">Cliente ID:</label>
+                    <input type="number" id="clienteId" name="clienteId" required>
+                    
+                    <label for="vehiculoId">Vehículo ID:</label>
+                    <input type="number" id="vehiculoId" name="vehiculoId" required>
+                    
+                    <label for="fechaInicio">Fecha de Inicio:</label>
+                    <input type="date" id="fechaInicio" name="fechaInicio" required>
+                    
+                    <label for="fechaFin">Fecha de Fin:</label>
+                    <input type="date" id="fechaFin" name="fechaFin" required>
+                    
+                    <label for="precio">Precio:</label>
+                    <input type="number" step="0.01" id="precio" name="precio" required>
+                    
+                    <div>
+                        <button type="submit">Crear</button>
+                        <button type="button" class="closeButtonModal">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <table id="tablaAlquileres">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -22,32 +49,15 @@
                     <th>Fecha de Inicio</th>
                     <th>Fecha de Fin</th>
                     <th>Precio</th>
-                    <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody id="alquileresTable">
-                <tr th:each="alquiler: ${alquileres}">
-                    <td th:text="${alquiler.id}"></td>
-                    <td th:text="${alquiler.clienteId}"></td>
-                    <td th:text="${alquiler.vehiculoId}"></td>
-                    <td th:text="${alquiler.fechaInicio}"></td>
-                    <td th:text="${alquiler.fechaFin}"></td>
-                    <td th:text="${alquiler.precio}"></td>
-                    <td>
-                        <button class="editButton">Editar</button>
-                    </td>
-                </tr>
+            <tbody>
+            <!-- Aquí se agregarán dinámicamente los alquileres -->
             </tbody>
-        </table>    
+        </table>   
     </main>
-    <dialog id="AlquilerDialog">
-        <form id="formAlquiler">
-            <div>
-                <button type="submit">Crea / Actualiza</button>
-                <button class="closeButtonModal">Cerrar</button>
-            </div>
-        </form>
-    </dialog>
+
     <div th:replace="~{fragments/footer}"></div>
+    <script src="/js/mi_alquiler.js"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.FoodSpringApp.FoodSpringApp.model.Usuario;
-import com.FoodSpringApp.FoodSpringApp.service.AlquilerService;
+//import com.FoodSpringApp.FoodSpringApp.service.AlquilerService;
 import com.FoodSpringApp.FoodSpringApp.service.UsuarioService;
 import com.FoodSpringApp.FoodSpringApp.service.VehiculoService;
 import org.springframework.security.core.userdetails.User;
@@ -15,8 +15,6 @@ import org.springframework.security.core.userdetails.User;
 @Controller
 public class AppController {
 
-    @Autowired
-    private AlquilerService alquilerService;
     @Autowired
     private UsuarioService usuarioService;
     @Autowired
