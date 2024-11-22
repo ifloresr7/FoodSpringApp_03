@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title th:text="${title}">Gestión de Clientes</title>
     <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
-    <script th:src="@{/js/clientes.js(v=${version})}" defer></script>
+    <script th:src="@{/js/gestionUsuarios.js(v=${version})}" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -16,7 +16,7 @@
         <p th:text="${description}"></p>
         <p th:text="${usuario}"></p>
         <button class="createButton">Añadir nuevo usuario</button>
-        <!-- Tabla de clientes -->
+        <!-- Tabla de usuarios -->
         <table>
             <thead>
                 <tr>
@@ -29,16 +29,27 @@
                 </tr>
             </thead>
             <tbody id="usuariosTable">
-                <!-- Aquí se cargarán los clientes mediante JavaScript -->
+                <!-- Aquí se cargarán los usuarios mediante JavaScript -->
+                <tr th:each="usuario: ${usuarios}">
+                    <td th:text="${usuario.id}"></td>
+                    <td th:text="${usuario.Nombre}"></td>
+                    <td th:text="${usuario.fechaInicio}"></td>
+                    <td th:text="${alquiler.fechaFin}"></td>
+                    <td th:text="${alquiler.Dirección}"></td>
+                    <td th:text="${usuario.Acciones}"></td>
+                    <td>
+                        <button class="editButton">Editar</button>
+                    </td>
+                </tr>
             </tbody>
         </table>
         
     </main>
 
-    <!-- DialogCliente -->
+    <!-- DialogCliente -->  
     <dialog id="usuarioModal">
         <span class="closeButtonModal close">&times;</span>
-        <h2 id="modalTitle">Agregar / Actualiza un cliente </h2>
+        <h2 id="modalTitle">Agregar / Actualiza un Usuario </h2>
         <form id="clienteForm" type="put">
             <input type="hidden" id="diUsuarioId" />
             <label>Nombre: <input type="text" id="diNombre" required /></label><br>
