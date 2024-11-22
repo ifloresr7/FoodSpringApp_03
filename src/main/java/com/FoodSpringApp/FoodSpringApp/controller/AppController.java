@@ -20,7 +20,7 @@ public class AppController {
     @Autowired
     private VehiculoService vehiculoService;
 
-    private String version = "2024.11.21.18.20";
+    private String version = "2024.11.22.18.20";
 
     @GetMapping("/")
     public String homePage(Model model) {
@@ -64,6 +64,15 @@ public class AppController {
 
     @GetMapping("/mis-alquileres")
     public String misAlquileresPage(Model model) {
+        String dni = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User) {
+            dni = ((User) principal).getUsername();
+        } else if (principal instanceof String) {
+            dni = principal.toString();
+        }
+        model.addAttribute("usuarioID", usuarioService.obtenerUsuarioPorDni(dni).getId());
+        model.addAttribute("vehiculos", "awdawdawd,ddwaadwwad,dwadwa,dwa,awd,wad,awd,wda");
         model.addAttribute("version", this.version);
         model.addAttribute("title", "Mis alquileres");
         model.addAttribute("description", "Estos son todos mis alquileres.");

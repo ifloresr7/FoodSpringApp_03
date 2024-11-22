@@ -5,7 +5,7 @@
     <title th:text="${title}">Título por Defecto</title>
     <meta name="description" th:content="${description}" />
     <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
-    <script th:src="@{/js/alquileres.js(v=${version})}"></script>
+    <script th:src="@{/js/mis_alquileres.js(v=${version})}"></script>
 </head>
 <body>
     <div th:replace="~{fragments/header}"></div> 
@@ -13,33 +13,29 @@
         <h1 th:text="${title}"></h1>
         <p th:text="${description}"></p>
         <button class="createButton">Crear nuevo alquiler</button>
-        <div id="crearAlquilerDialog" class="hidden">
+        <dialog id="crearAlquilerDialog">
             <div class="modal-content">
                 <form id="formCrearAlquiler">
                     <h2>Crear nuevo alquiler</h2>
-                    <label for="clienteId">Cliente ID:</label>
-                    <input type="number" id="clienteId" name="clienteId" required>
-                    
+                    <input type="number" id="clienteId" name="clienteId" hidden th:value="${usuarioID}" required>
                     <label for="vehiculoId">Vehículo ID:</label>
-                    <input type="number" id="vehiculoId" name="vehiculoId" required>
-                    
+                    <select type="number" id="vehiculoId" name="vehiculoId" required>
+                        <!-- foreach: vehiculos : vehiculoId
+                            <option value="${vehiculoId}" data-price="${vehiculoPrecio}">${vehiculoNombre} ${vehiculoMatricula}</option> -->
+                    </select>
                     <label for="fechaInicio">Fecha de Inicio:</label>
                     <input type="date" id="fechaInicio" name="fechaInicio" required>
-                    
                     <label for="fechaFin">Fecha de Fin:</label>
                     <input type="date" id="fechaFin" name="fechaFin" required>
-                    
-                    <label for="precio">Precio:</label>
-                    <input type="number" step="0.01" id="precio" name="precio" required>
-                    
+                    <p><b>Precio:</b></p>
+                    <p id="precio"></p>
                     <div>
                         <button type="submit">Crear</button>
                         <button type="button" class="closeButtonModal">Cerrar</button>
                     </div>
                 </form>
             </div>
-        </div>
-        
+        </dialog>
         <table id="tablaAlquileres">
             <thead>
                 <tr>
@@ -56,8 +52,6 @@
             </tbody>
         </table>   
     </main>
-
     <div th:replace="~{fragments/footer}"></div>
-    <script src="/js/mi_alquiler.js"></script>
 </body>
 </html>

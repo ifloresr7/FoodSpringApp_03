@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Mostrar modal para crear alquiler al hacer clic en el botón
     createButton.addEventListener("click", () => {
-        crearAlquilerDialog.classList.remove("hidden");
+        crearAlquilerDialog.showModal();
     });
 
     // Crear alquiler
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             if (response.ok) {
                 alert("Alquiler creado exitosamente");
-                crearAlquilerDialog.classList.add("hidden");
+                crearAlquilerDialog.close();
                 formCrearAlquiler.reset();
 
                 // Recargar alquileres
@@ -78,6 +78,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     closeButton.addEventListener("click", () => {
-        crearAlquilerDialog.classList.add("hidden");
+        crearAlquilerDialog.close();
     });
 });
