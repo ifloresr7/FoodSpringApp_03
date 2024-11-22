@@ -4,49 +4,19 @@
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
     <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
-    <script th:src="@{/js/vehiculos.js(v=${version})}" defer></script>
 </head>
 <body>
     <div th:replace="~{fragments/header}"></div>
     <main class="content">
         <h1 th:text="${title}"></h1>
         <p th:text="${description}"></p>
-        <button class="createButton">Añadir Nuevo Vehículo</button>
-        <!-- Tabla de vehículos -->
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Color</th>
-                    <th>Marca</th>
-                    <th>Puertas</th>
-                    <th>Autonomía (km)</th>
-                    <th>Potencia (cv)</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="vehiculosTable">
-                <!-- Aquí se cargarán los vehículos mediante JavaScript -->
-            </tbody>
-        </table>
+        <div th:each="vehivulo: ${vehiculos}">
+            <p th:text="${vehivulo.id}"></p>
+            <p th:text="${vehivulo.marca}"></p>
+            <p th:text="${vehivulo.color}"></p>
+        </div>
     </main>
-
-    <!-- DialogVehiculo -->
-    <dialog id="vehiculoModal">
-        <span class="closeButtonModal close">&times;</span>
-        <h2 id="modalTitle">Agregar / Actualizar Vehículo</h2>
-        <form id="vehiculoForm">
-            <input type="hidden" id="diVehiculoId" />
-            <label>Color: <input type="text" id="diColor" required /></label><br>
-            <label>Marca: <input type="text" id="diMarca" required /></label><br>
-            <label>Puertas: <input type="number" id="diPuertas" required /></label><br>
-            <label>Autonomía (km): <input type="number" id="diAutonomia_km" required /></label><br>
-            <label>Potencia (cv): <input type="number" id="diPotencia_cv" required /></label><br>
-            <button type="submit">Crear / Actualizar</button>
-            <button class="closeButtonModal">Cerrar</button>
-        </form>
-    </dialog>
-
     <div th:replace="~{fragments/footer}"></div>
 </body>
 </html>
+

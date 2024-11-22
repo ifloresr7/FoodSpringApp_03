@@ -45,24 +45,20 @@ potencia_cv	int(11)
     @Column(name = "potencia_cv", nullable = false)
     private int potencia_cv;
 
-
-    
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
+    @Column(name = "precio_dia", nullable = false)
+    private double precio_dia;
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getColor() {
         return color;
     }
-
 
     public void setColor(String color) {
         this.color = color;
@@ -84,6 +80,14 @@ potencia_cv	int(11)
         this.puertas = puertas;
     }
 
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
     public int getAutonomia_km() {
         return autonomia_km;
     }
@@ -99,4 +103,14 @@ potencia_cv	int(11)
     public void setPotencia_cv(int potencia_cv) {
         this.potencia_cv = potencia_cv;
     }
+
+    public double getPrecio_dia() {
+        return precio_dia;
+    }
+
+    public void setPrecio_dia(double precio_dia) {
+        this.precio_dia = precio_dia;
+    }
+    
+    
 }

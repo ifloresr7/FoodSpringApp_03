@@ -22,12 +22,6 @@ public class VehiculoController {
 
     @Autowired
     private VehiculoService vehiculoService;
-     
-    @GetMapping
-    public ResponseEntity<List<Vehiculo>> obtenerTodosVehiculos() {
-        List<Vehiculo> vehiculos = vehiculoService.obtenerTodosVehiculos();
-        return ResponseEntity.ok(vehiculos);
-    }
 
     @PostMapping
     public ResponseEntity<Vehiculo> guardarVehiculo(@RequestBody Vehiculo vehiculo) {
