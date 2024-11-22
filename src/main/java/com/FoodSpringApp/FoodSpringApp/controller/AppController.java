@@ -38,8 +38,8 @@ public class AppController {
     public String vehiculosPage(Model model) {
         model.addAttribute("version", this.version);
         model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
-        model.addAttribute("title", "Gestión de Vehículos");
-        model.addAttribute("description", "Aquí puedes ver todos los vehículos.");
+        model.addAttribute("title", "Nuestros mejores vehiculos");
+        model.addAttribute("description", "Aquí puedes ver todos los vehículos disponibles para alquilar 🐈.");
         model.addAttribute("currentPage", "vehiculos");
         model.addAttribute("role", obtenerRoleDeUsuario());
         return "vehiculos";

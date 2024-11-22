@@ -7,13 +7,38 @@
 </head>
 <body>
     <div th:replace="~{fragments/header}"></div>
-    <main class="content">
+    <main class="content vehiculosPage">
         <h1 th:text="${title}"></h1>
         <p th:text="${description}"></p>
-        <div th:each="vehivulo: ${vehiculos}">
-            <p th:text="${vehivulo.id}"></p>
-            <p th:text="${vehivulo.marca}"></p>
-            <p th:text="${vehivulo.color}"></p>
+        <div class="car-card" th:each="vehivulo: ${vehiculos}">
+            <h2 th:text="${vehivulo.marca}"></h2>
+            <div class="inline">
+                <img src="/images/svg/example_car.png">
+                <div class="column">
+                    <div class="inline">
+                        <img src="/images/svg/colorCar.svg">
+                        <p th:text="${vehivulo.color}"></p>
+                    </div>
+                    <div class="inline">
+                        <img src="/images/svg/puertasCar.svg">
+                        <p th:text="${vehivulo.puertas}"></p>
+                    </div>
+                    <div class="inline">
+                        <img src="/images/svg/autonomia_kmCar.svg">
+                        <p th:text="${vehivulo.autonomia_km}+ ' KM'"></p>
+                    </div>                
+                </div>
+                <div class="column">
+                    <div class="inline">
+                        <img src="/images/svg/potencia_cvCar.svg">
+                        <p th:text="${vehivulo.potencia_cv}"></p>
+                    </div>
+                    <div class="inline">
+                        <img src="/images/svg/precio_diaCar.svg">
+                        <p th:text="${vehivulo.precio_dia}+ '€'"></p>
+                    </div>                
+                </div>
+            </div>
         </div>
     </main>
     <div th:replace="~{fragments/footer}"></div>

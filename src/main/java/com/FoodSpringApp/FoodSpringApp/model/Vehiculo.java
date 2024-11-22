@@ -111,6 +111,5 @@ potencia_cv	int(11)
     public void setPrecio_dia(double precio_dia) {
         this.precio_dia = precio_dia;
     }
-    
-    
+
 }
