@@ -41,30 +41,29 @@ public class AlquilerController {
     }
 
     @PostMapping("/crear-alquiler")
-public ResponseEntity<?> crearAlquiler(@RequestBody Alquiler alquilerData) {
-    try {
-        // Validar campos obligatorios
-        if (alquilerData.getClienteId() == 0) {
-            return ResponseEntity.badRequest().body("El campo clienteId es obligatorio.");
-        }
-        if (alquilerData.getVehiculoId() == 0) {
-            return ResponseEntity.badRequest().body("El campo vehiculoId es obligatorio.");
-        }
+    public ResponseEntity<?> crearAlquiler(@RequestBody Alquiler alquilerData) {
+        try {
+            // Validar campos obligatorios
+            if (alquilerData.getClienteId() == 0) {
+                return ResponseEntity.badRequest().body("El campo clienteId es obligatorio.");
+            }
+            if (alquilerData.getVehiculoId() == 0) {
+                return ResponseEntity.badRequest().body("El campo vehiculoId es obligatorio.");
+            }
 
-        // Crear el alquiler
-        Alquiler nuevoAlquiler = alquilerService.create(alquilerData);
-        if (nuevoAlquiler != null) {
-            return ResponseEntity.ok(nuevoAlquiler);
-        } else {
+            // Crear el alquiler
+            Alquiler nuevoAlquiler = alquilerService.create(alquilerData);
+            if (nuevoAlquiler != null) {
+                return ResponseEntity.ok(nuevoAlquiler);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                    .body("Hubo un problema al guardar el alquiler.");
+            }
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body("Hubo un problema al guardar el alquiler.");
+                                .body("Error inesperado: " + e.getMessage());
         }
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                             .body("Error inesperado: " + e.getMessage());
     }
-}
-
 
        
     @GetMapping("/mis-alquileres")

@@ -19,16 +19,29 @@
                     <h2>Crear nuevo alquiler</h2>
                     <input type="number" id="clienteId" name="clienteId" hidden th:value="${usuarioID}" required>
                     <label for="vehiculoId">Vehículo ID:</label>
-                    <select type="number" id="vehiculoId" name="vehiculoId" required>
-                        <!-- foreach: vehiculos : vehiculoId
-                            <option value="${vehiculoId}" data-price="${vehiculoPrecio}">${vehiculoNombre} ${vehiculoMatricula}</option> -->
+                    <select id="vehiculoId" name="vehiculoId" required>
+                        <option value="" disabled selected>Seleccione un vehículo</option>
+                        <th:block th:each="vehiculo : ${vehiculos}">
+                            <option th:value="${vehiculo.id}" 
+                                    th:data-price="${vehiculo.precio_dia}" 
+                                    th:text="${vehiculo.id} + ' - ' + ${vehiculo.marca} + ' (' + ${vehiculo.matricula} + ')'">
+                        </th:block>
                     </select>
+                    
                     <label for="fechaInicio">Fecha de Inicio:</label>
                     <input type="date" id="fechaInicio" name="fechaInicio" required>
+
                     <label for="fechaFin">Fecha de Fin:</label>
                     <input type="date" id="fechaFin" name="fechaFin" required>
+
+                    <p id="errorFechas" style="color: red; display: none;">La fecha de inicio debe ser menor o igual que la fecha de fin.</p>
+                    
                     <p><b>Precio:</b></p>
                     <p id="precio"></p>
+
+                    <p><b>Precio total:</b></p>
+                    <p id="precioTotal"></p>
+                    
                     <div>
                         <button type="submit">Crear</button>
                         <button type="button" class="closeButtonModal">Cerrar</button>

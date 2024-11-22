@@ -1,6 +1,6 @@
 package com.FoodSpringApp.FoodSpringApp.controller;
 
-import java.util.List;
+//import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.FoodSpringApp.FoodSpringApp.model.Usuario;
-import com.FoodSpringApp.FoodSpringApp.model.Vehiculo;
+//import com.FoodSpringApp.FoodSpringApp.model.Vehiculo;
 import com.FoodSpringApp.FoodSpringApp.service.UsuarioService;
 import com.FoodSpringApp.FoodSpringApp.service.VehiculoService;
 import org.springframework.security.core.userdetails.User;
@@ -74,7 +74,7 @@ public class AppController {
             dni = principal.toString();
         }
         model.addAttribute("usuarioID", usuarioService.obtenerUsuarioPorDni(dni).getId());
-        model.addAttribute("vehiculos", "awdawdawd,ddwaadwwad,dwadwa,dwa,awd,wad,awd,wda");
+        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
         model.addAttribute("version", this.version);
         model.addAttribute("title", "Mis alquileres");
         model.addAttribute("description", "Estos son todos mis alquileres.");

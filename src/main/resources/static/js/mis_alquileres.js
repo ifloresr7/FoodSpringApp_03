@@ -80,4 +80,71 @@ document.addEventListener("DOMContentLoaded", async function () {
     closeButton.addEventListener("click", () => {
         crearAlquilerDialog.close();
     });
+
+    document.getElementById('vehiculoId').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex]; // Obtener opción seleccionada
+        const precio = selectedOption.getAttribute('data-price'); // Leer atributo data-price
+        document.getElementById('precio').textContent = precio ? `${precio} €` : 'Precio no disponible'; // Actualizar precio
+    });
+
+    document.getElementById("formCrearAlquiler").addEventListener("submit", function (event) {
+        // Obtén las fechas seleccionadas
+        const fechaInicio = new Date(document.getElementById("fechaInicio").value);
+        const fechaFin = new Date(document.getElementById("fechaFin").value);
+    
+        // Referencia al mensaje de error
+        const errorFechas = document.getElementById("errorFechas");
+    
+        // Validar que la fecha de inicio no sea mayor que la fecha de fin
+        if (fechaInicio > fechaFin) {
+            // Mostrar mensaje de error
+            errorFechas.style.display = "block";
+    
+            // Evitar que el formulario se envíe
+            event.preventDefault();
+        } else {
+            // Ocultar mensaje de error
+            errorFechas.style.display = "none";
+        }
+    });
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const vehiculoSelect = document.getElementById("vehiculoId");
+        const fechaInicioInput = document.getElementById("fechaInicio");
+        const fechaFinInput = document.getElementById("fechaFin");
+        const precioTotalElement = document.getElementById("precioTotal");
+    
+        // Función para actualizar el precio total
+        function actualizarPrecioTotal() {
+            const selectedOption = vehiculoSelect.options[vehiculoSelect.selectedIndex];
+            const precioDia = parseFloat(selectedOption?.getAttribute("data-price") || 0);
+            const fechaInicio = new Date(fechaInicioInput.value);
+            const fechaFin = new Date(fechaFinInput.value);
+    
+            // Validación de fechas y cálculo
+            if (!fechaInicioInput.value || !fechaFinInput.value) {
+                precioTotalElement.textContent = "Selecciona fechas válidas";
+                return;
+            }
+    
+            if (!isNaN(fechaInicio.getTime()) && !isNaN(fechaFin.getTime()) && precioDia > 0) {
+                const diferenciaDias = Math.floor((fechaFin - fechaInicio) / (1000 * 60 * 60 * 24)) + 1;
+    
+                if (diferenciaDias > 0) {
+                    const precioTotal = diferenciaDias * precioDia;
+                    precioTotalElement.textContent = `${precioTotal.toFixed(2)} €`;
+                } else {
+                    precioTotalElement.textContent = "Fechas inválidas";
+                }
+            } else {
+                precioTotalElement.textContent = "Selecciona vehículo y fechas";
+            }
+        }
+    
+        // Eventos para recalcular el precio total
+        vehiculoSelect.addEventListener("change", actualizarPrecioTotal);
+        fechaInicioInput.addEventListener("change", actualizarPrecioTotal);
+        fechaFinInput.addEventListener("change", actualizarPrecioTotal);
+    });
+    
 });
