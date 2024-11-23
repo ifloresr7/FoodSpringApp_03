@@ -356,7 +356,16 @@ dialog::backdrop {
     backdrop-filter: blur(3px);
 }
 
-#mis_alquileres{
+#crearAlquilerDialog{
+    dialog#PostdialogUsuario form {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 0.5rem;
+    }
+    
+    dialog#PostdialogUsuario {
+        background-color: #e0e0e0;
+    }
     .grid {
         display: grid;
         grid-template-columns: 200px 200px;
