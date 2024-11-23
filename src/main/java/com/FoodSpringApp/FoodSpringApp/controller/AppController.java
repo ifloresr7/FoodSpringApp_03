@@ -24,7 +24,7 @@ public class AppController {
     @Autowired
     private AlquilerService alquilerService;
 
-    private String version = "2024.11.22.19.21";
+    private String version = "2024.11.22.19.22";
 
     @GetMapping("/")
     public String homePage(Model model) {
