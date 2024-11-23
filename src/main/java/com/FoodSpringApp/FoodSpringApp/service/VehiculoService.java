@@ -36,16 +36,7 @@ public class VehiculoService{
      * 
      */
     public Vehiculo update(int id, Vehiculo vehiculoData) {
- /* 
-    * 
-id	int(11)
-color	varchar(255)
-marca	varchar(255)
-matricula	varchar(10)
-puertas	int(11)
-autonomia_km	int(11)
-potencia_cv	int(11)
-   */
+  
   
         Vehiculo vehiculo = findById(id);
         if (vehiculo != null) {
@@ -55,6 +46,7 @@ potencia_cv	int(11)
             vehiculo.setMatricula(vehiculoData.getMatricula());
             vehiculo.setPotencia_cv(vehiculoData.getPotencia_cv());
             vehiculo.setPuertas(vehiculoData.getPuertas());
+            vehiculo.setPrecio_dia(vehiculoData.getPrecio_dia());
 
             return vehiculoRepository.save(vehiculo);
         }

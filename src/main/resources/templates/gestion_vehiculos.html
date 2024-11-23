@@ -38,7 +38,7 @@
                 <td th:text="${vehiculo.potencia_cv}"></td>
                 <td th:text="${vehiculo.precio_dia}"></td> 
                 <td>
-                    <button class="editButton">Editar</button>
+                    <button class="editButton" id="vehiculoModal" onclick="cargarVehiculos()">Editar</button>                     
                 </td>
             </tr>
             </tbody>
@@ -55,12 +55,13 @@
             <label>Puertas: <input type="number" id="diPuertas" required /></label><br>
             <label>Autonomía (km): <input type="number" id="diAutonomia_km" required /></label><br>
             <label>Potencia (cv): <input type="number" id="diPotencia_cv" required /></label><br>
-            <label>Precio_dia: <input type="number" id="Precio_dia" required /></label><br>
+            <label>Precio_dia: <input type="number" id="diPrecio_dia" required /></label><br>
             <button type="submit">Crear / Actualizar</button>
             <button class="closeButtonModal">Cerrar</button>
         </form>
     </dialog>
 
     <div th:replace="~{fragments/footer}"></div>
+   
 </body>
 </html>

@@ -7,6 +7,9 @@ const diMarca = document.getElementById('diMarca');
 const diPuertas = document.getElementById('diPuertas');
 const diAutonomia_km = document.getElementById('diAutonomia_km');
 const diPotencia_cv = document.getElementById('diPotencia_cv');
+const diPrecio_dia = document.getElementById('diPrecio_dia');
+
+
 
 // Función para cargar vehiculos
 function cargarVehiculos() {
@@ -24,6 +27,7 @@ function cargarVehiculos() {
                     <td>${vehiculo.puertas}</td>
                     <td>${vehiculo.autonomia_km}</td>
                     <td>${vehiculo.potencia_cv}</td>
+                    <td>${vehiculo.precio_dia}</td>
                     <td>
                         <button class="editButton">Editar</button>
                         <button class="deleteButton">Eliminar</button>
@@ -54,6 +58,7 @@ function createFunctionalityButton() {
                 diPuertas.value = vehiculo.puertas;
                 diAutonomia_km.value = vehiculo.autonomia_km;
                 diPotencia_cv.value = vehiculo.potencia_cv;
+                diPrecio_dia.value = vehiculo.diPrecio_dia;
                 dialogVehiculo.showModal();
             }
         });
@@ -86,7 +91,8 @@ document.getElementById('vehiculoForm').addEventListener('submit', function(e) {
         marca: diMarca.value,
         puertas: diPuertas.value,
         autonomia_km: diAutonomia_km.value,
-        potencia_cv: diPotencia_cv.value
+        potencia_cv: diPotencia_cv.value,
+        precio_dia: diPrecio_dia.value
     };
     const method = vehiculoData.id ? 'PUT' : 'POST';
     const url = vehiculoData.id ? `/api/vehiculos/${vehiculoData.id}` : '/api/vehiculos';
