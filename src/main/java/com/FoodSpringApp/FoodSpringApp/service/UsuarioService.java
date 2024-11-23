@@ -60,6 +60,12 @@ public class UsuarioService implements UserDetailsService {
             String nuevaContrasena = usuarioData.getPassword();
             usuarioExistente.setPassword(passwordEncoder.encode(nuevaContrasena));
         }
+        if (usuarioData.getDni() != null && !usuarioData.getDni().isEmpty()) {
+            usuarioExistente.setDni(usuarioData.getDni());
+        }
+        if (usuarioData.getRole() != null && !usuarioData.getRole().isEmpty()) {
+            usuarioExistente.setRole(usuarioData.getRole());
+        }
         usuarioExistente.setNombre(usuarioData.getNombre());
         usuarioExistente.setApellidos(usuarioData.getApellidos());
         usuarioExistente.setEmail(usuarioData.getEmail());

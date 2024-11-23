@@ -363,23 +363,19 @@ dialog::backdrop {
         grid-column-gap: 10px;
         grid-row-gap: 1em;
     }
-    
     p.text {
         font-weight: 300;
         color: #555555;
         text-align: justify;
     }
-    
     .input-group {
         padding: 0.4rem;
         background: #e6e6e6;
         text-align: left;
     }
-    
     .grid p#precio {
         margin-bottom: 0;
     }
-
     .inline_buttons {
         display: flex;
         gap: 1rem;

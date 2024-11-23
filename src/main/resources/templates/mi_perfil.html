@@ -14,7 +14,7 @@
     <main class="content">
         <h1 th:text="${title}">Editar perfil</h1>
         <p th:text="${description}">Actualizar tu información</p>
-        <form id="clienteForm" method="post" action="/actualizar-perfil">
+        <form id="clienteForm" method="put">
             <input type="hidden" id="diUsuarioId" name="id" th:value="${usuario.id}"/>
             <label>Nombre: <input type="text" id="diNombre" name="nombre" required th:value="${usuario.nombre}"/></label><br>
             <label>Apellidos: <input type="text" id="diApellidos" name="apellidos" required th:value="${usuario.apellidos}"/></label><br>

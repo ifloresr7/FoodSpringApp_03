@@ -34,7 +34,11 @@ public class UsuarioController {
     public ResponseEntity<Map<String, String>> guardarCliente(@RequestBody Usuario usuario) {
         Map<String, String> response = new HashMap<>();
         try {
-            usuario.setRole("USER");
+            if (usuario.getRole() != null && !usuario.getRole().isEmpty()) {
+                usuario.setRole(usuario.getRole());
+            }else{
+                usuario.setRole("USER");
+            }
             Usuario nuevoUsuario = usuarioService.save(usuario);
             response.put("message", "Usuario registrado con éxito.");
             return ResponseEntity.ok(response);

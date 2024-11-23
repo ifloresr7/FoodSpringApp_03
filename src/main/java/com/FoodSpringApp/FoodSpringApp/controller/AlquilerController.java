@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.FoodSpringApp.FoodSpringApp.model.Alquiler;
 import com.FoodSpringApp.FoodSpringApp.model.Usuario;
+//import com.FoodSpringApp.FoodSpringApp.repository.VehiculoRepository;
 import com.FoodSpringApp.FoodSpringApp.service.AlquilerService;
 import com.FoodSpringApp.FoodSpringApp.service.UsuarioService;
+
 
 @Controller
 @RequestMapping("/api/alquileres")
@@ -26,8 +28,8 @@ public class AlquilerController {
     private AlquilerService alquilerService;
     
     @Autowired
-    private UsuarioService usuarioService
-    ;
+    private UsuarioService usuarioService;
+
     @GetMapping
     public ResponseEntity<List<Alquiler>> obtenerTodosAlquileres() {
     List<Alquiler> alquileres = alquilerService.obtenerTodosAlquileres();
