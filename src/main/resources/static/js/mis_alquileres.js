@@ -1,145 +1,78 @@
-document.addEventListener("DOMContentLoaded", async function () {
-    const createButton = document.querySelector(".createButton");
-    const closeButton = document.querySelector(".closeButtonModal");
-    const crearAlquilerDialog = document.getElementById("crearAlquilerDialog");
-    const formCrearAlquiler = document.getElementById("formCrearAlquiler");
-    const tablaAlquileres = document.getElementById("tablaAlquileres").querySelector("tbody");
-    const precioTotalElement = document.getElementById("precioTotal");
+const crearAlquilerDialog = document.getElementById("crearAlquilerDialog");
+const createButton = document.querySelector(".createButton");
+createButton.addEventListener("click", () => {
+    crearAlquilerDialog.showModal();
+});
+const closeButton = document.querySelector(".closeButtonModal");
+closeButton.addEventListener("click", () => {
+    crearAlquilerDialog.close();
+});
 
-    // Cargar alquileres automáticamente al cargar la página
+const formCrearAlquiler = document.getElementById("formCrearAlquiler");
+
+formCrearAlquiler.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const alquilerData = {
+        clienteId: document.getElementById("clienteId").value,
+        vehiculoId: document.getElementById("vehiculoId").value,
+        fechaInicio: document.getElementById("fechaInicio").value,
+        fechaFin: document.getElementById("fechaFin").value,
+        precio: document.getElementById("precio").value
+    };
     try {
-        const response = await fetch('/api/alquileres/mis-alquileres'); // Endpoint para obtener alquileres
+        const response = await fetch('/api/alquileres/crear-alquiler', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(alquilerData)
+        });
         if (response.ok) {
-            const alquileres = await response.json();
-            llenarTablaAlquileres(alquileres);
+            alert("Alquiler creado exitosamente");
+            crearAlquilerDialog.close();
+            formCrearAlquiler.reset();
         } else {
-            alert("Error al obtener los alquileres.");
+            alert("Error al crear el alquiler.");
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("Hubo un problema al cargar los alquileres.");
+        alert("Hubo un problema al comunicarse con el servidor.");
+    } finally {
+        window.location.reload();
     }
-
-    // Mostrar modal para crear alquiler al hacer clic en el botón
-    createButton.addEventListener("click", () => {
-        crearAlquilerDialog.showModal();
-    });
-
-    // Crear alquiler
-    formCrearAlquiler.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const alquilerData = {
-            clienteId: document.getElementById("clienteId").value,
-            vehiculoId: document.getElementById("vehiculoId").value,
-            fechaInicio: document.getElementById("fechaInicio").value,
-            fechaFin: document.getElementById("fechaFin").value,
-            precio: document.getElementById("precio").value
-        };
-
-        try {
-            const response = await fetch('/api/alquileres/crear-alquiler', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(alquilerData)
-            });
-
-            if (response.ok) {
-                alert("Alquiler creado exitosamente");
-                crearAlquilerDialog.close();
-                formCrearAlquiler.reset();
-
-                // Recargar alquileres
-                const nuevoAlquiler = await response.json();
-                llenarTablaAlquileres([nuevoAlquiler]);
-            } else {
-                alert("Error al crear el alquiler.");
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Hubo un problema al comunicarse con el servidor.");
-        }
-    });
-
-    // Función para llenar la tabla con los alquileres
-    function llenarTablaAlquileres(alquileres) {
-        tablaAlquileres.innerHTML = ""; // Limpiar tabla
-        alquileres.forEach(alquiler => {
-            const fila = document.createElement("tr");
-            fila.innerHTML = `
-                <td>${alquiler.id}</td>
-                <td>${alquiler.clienteId}</td>
-                <td>${alquiler.vehiculoId}</td>
-                <td>${alquiler.fechaInicio}</td>
-                <td>${alquiler.fechaFin}</td>
-                <td>${alquiler.precio}</td>
-            `;
-            tablaAlquileres.appendChild(fila);
-        });
-    }
-
-    closeButton.addEventListener("click", () => {
-        crearAlquilerDialog.close();
-    });
-
-    document.getElementById('vehiculoId').addEventListener('change', function () {
-        const selectedOption = this.options[this.selectedIndex]; // Obtener opción seleccionada
-        const precio = selectedOption.getAttribute('data-price'); // Leer atributo data-price
-        document.getElementById('precio').textContent = precio ? `${precio} €` : 'Precio no disponible'; // Actualizar precio
-    });
-
-    document.getElementById("formCrearAlquiler").addEventListener("submit", function (event) {
-        // Obtén las fechas seleccionadas
-        const fechaInicio = new Date(document.getElementById("fechaInicio").value);
-        const fechaFin = new Date(document.getElementById("fechaFin").value);
-    
-        // Referencia al mensaje de error
-        const errorFechas = document.getElementById("errorFechas");
-    
-        // Validar que la fecha de inicio no sea mayor que la fecha de fin
-        if (fechaInicio > fechaFin) {
-            // Mostrar mensaje de error
-            errorFechas.style.display = "block";
-    
-            // Evitar que el formulario se envíe
-            event.preventDefault();
-        } else {
-            // Ocultar mensaje de error
-            errorFechas.style.display = "none";
-        }
-    });
-    
-     // Función para actualizar el precio total
-     function actualizarPrecioTotal() {
-        const vehiculoSelect = document.getElementById("vehiculoId");
-        const fechaInicioInput = document.getElementById("fechaInicio");
-        const fechaFinInput = document.getElementById("fechaFin");
-        const precioTotalElement = document.getElementById("precioTotal");
-    
-        if (!vehiculoSelect || !fechaInicioInput || !fechaFinInput || !precioTotalElement) {
-            console.error("Elementos necesarios no encontrados en el DOM.");
-            return;
-        }
-    
-        const selectedOption = vehiculoSelect.options[vehiculoSelect.selectedIndex];
-        const precioDia = parseFloat(selectedOption?.getAttribute("data-price") || 0);
-        const fechaInicio = new Date(fechaInicioInput.value);
-        const fechaFin = new Date(fechaFinInput.value);
-    
-        if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime()) || precioDia <= 0) {
-            precioTotalElement.textContent = "Datos inválidos";
-            return;
-        }
-    
-        const diferenciaDias = Math.floor((fechaFin - fechaInicio) / (1000 * 60 * 60 * 24)) + 1;
-    
-        if (diferenciaDias <= 0) {
-            precioTotalElement.textContent = "Fechas inválidas";
-            return;
-        }
-    
-        const precioTotal = diferenciaDias * precioDia;
-        precioTotalElement.textContent = `${precioTotal.toFixed(2)} €`;
-    }
-      
 });
+
+let price;
+let dateinit;
+let dateend;
+
+document.getElementById('vehiculoId').addEventListener('change', function() {
+    price = this.options[this.selectedIndex].getAttribute('data-price');
+    document.getElementById('precio').innerHTML = price + '€';
+    calculatePrice();
+});
+
+document.getElementById('fechaInicio').addEventListener('change', function() {
+    dateinit = this.value;
+    calculatePrice();
+});
+
+document.getElementById('fechaFin').addEventListener('change', function() {
+    dateend = this.value;
+    calculatePrice();
+});
+
+function calculatePrice(){
+    if(!price || !dateinit || !dateend){
+        return;
+    }
+    let startDate = new Date(dateinit);
+    let endDate = new Date(dateend);
+    if (endDate < startDate) {
+        alert('La fecha de fin no puede ser anterior a la fecha de inicio.');
+        document.getElementById('fechaFin').value = dateinit;
+        endDate = startDate;
+    }
+    const differenceInTime = endDate - startDate;
+    const differenceInDays = differenceInTime / (1000 * 3600 * 24) + 1;
+    const totalPrice = differenceInDays * price;
+    document.getElementById('precioTotal').innerHTML = totalPrice.toFixed(2) + '€';
+}
