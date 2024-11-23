@@ -105,6 +105,7 @@ public class AppController {
 
     @GetMapping("/gestion-vehiculos")
     public String gestionVehiculosPage(Model model) {
+        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
         model.addAttribute("version", this.version);
         model.addAttribute("title", "Gestión de Vehículos");
         model.addAttribute("description", "Aquí puedes ver todos los vehículos.");
@@ -139,9 +140,9 @@ public class AppController {
         String role = "ROLE_ANONYMOUS";
         if (authentication != null && authentication.isAuthenticated()) {
             role = authentication.getAuthorities().stream()
-                    .map(grantedAuthority -> grantedAuthority.getAuthority())
-                    .findFirst()
-                    .orElse("ROLE_ANONYMOUS");
+                .map(grantedAuthority -> grantedAuthority.getAuthority())
+                .findFirst()
+                .orElse("ROLE_ANONYMOUS");
         }
         return role;
     }

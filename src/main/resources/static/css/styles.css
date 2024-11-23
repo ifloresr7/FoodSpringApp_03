@@ -111,6 +111,9 @@ body {
 
 input, button, textarea, select {
     font: inherit;
+    border: 1px solid;
+    padding: 0.4rem;
+    width: 100%;
 }
 
 p {
@@ -314,7 +317,7 @@ dialog {
     color: currentColor;
     top: 50%;
     left: 50%;
-    max-width: 450px;
+    max-width: 600px;
     background-color: white;
     position: fixed;
     box-shadow: 0 0 7px 0px #808080;
@@ -351,6 +354,40 @@ dialog button[type=submit] {
 dialog::backdrop {
     background: #8080802b;
     backdrop-filter: blur(3px);
+}
+
+#mis_alquileres{
+    .grid {
+        display: grid;
+        grid-template-columns: 200px 200px;
+        grid-column-gap: 10px;
+        grid-row-gap: 1em;
+    }
+    
+    p.text {
+        font-weight: 300;
+        color: #555555;
+        text-align: justify;
+    }
+    
+    .input-group {
+        padding: 0.4rem;
+        background: #e6e6e6;
+        text-align: left;
+    }
+    
+    .grid p#precio {
+        margin-bottom: 0;
+    }
+
+    .inline_buttons {
+        display: flex;
+        gap: 1rem;
+    }
+    button.closeButtonModal {
+        background-color: #cccccc;
+        color: black;
+    }
 }
 
 table {
@@ -452,7 +489,7 @@ button {
     transition: background-color 0.3s ease;
 }
 
-/* Estilo al pasar el mouse sobre el botón */
+/* Estilo al pasar el mouse sobre el botÃ³n */
 button:hover {
     background-color: #45a049;
 }
