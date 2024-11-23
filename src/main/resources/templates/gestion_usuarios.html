@@ -4,62 +4,114 @@
     <meta charset="UTF-8">
     <title th:text="${title}">Gestión de Usuarios</title>
     <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
- 
+    <script th:src="@{/js/gestion_usuarios.js(v=${version})}" defer></script>
 </head>
 <body>
     <!-- Header -->
     <div th:replace="~{fragments/header}"></div>
-
     <!-- Contenido principal -->
     <main class="content">
         <h1 th:text="${title}"></h1>
         <p th:text="${description}"></p>       
-        <button class="createButton">Añadir nuevo usuario</button>
+        <button id="createButton" class="createButton">Añadir nuevo usuario</button>
         <!-- Tabla de usuarios -->
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nombre Completo</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Dirección</th>
-                    <th>Acciones</th>
+                    <th>id</th>
+                    <th>nombre</th>
+                    <th>apellidos</th>
+                    <th>dni</th>
+                    <th>email</th>
+                    <th>role</th>
+                    <th>telefono</th>
+                    <th>direccion</th>
+                    <th>acciones</th>
                 </tr>
             </thead>
             <tbody id="usuariosTable">
-                <tr th:each="usuario: ${usuarios}">
-                    <td th:text="${usuario.id}"></td>
-                    <td th:text="${usuario.Nombre}"></td>
-                    <td th:text="${usuario.email}"></td>
-                    <td th:text="${usuario.telefono}"></td>
-                    <td th:text="${usuario.direccion}"></td>
-                     
+                <tr th:each="usuario: ${usuarios}" th:data-id="${usuario.id}">
+                    <td th:data-id="${usuario.id}" th:text="${usuario.id}"></td>
+                    <td th:data-nombre="${usuario.nombre}" th:text="${usuario.nombre}"></td>
+                    <td th:data-apellidos="${usuario.apellidos}" th:text="${usuario.apellidos}"></td>
+                    <td th:data-dni="${usuario.dni}" th:text="${usuario.dni}"></td>
+                    <td th:data-email="${usuario.email}" th:text="${usuario.email}"></td>
+                    <td th:data-role="${usuario.role}" th:text="${usuario.role}"></td>
+                    <td th:data-telefono="${usuario.telefono}" th:text="${usuario.telefono}"></td>
+                    <td th:data-direccion="${usuario.direccion}" th:text="${usuario.direccion}"></td>
                     <td>
                         <button class="editButton">Editar</button>
+                        <button class="deleteButton">Eliminar</button>
                     </td>
                 </tr>
-            </tbody>
+            </tbody>            
         </table>
-        
     </main>
-
     <!-- DialogUsuario -->  
-    <dialog id="usuarioModal">
-        <span class="closeButtonModal close">&times;</span>
-        <h2 id="modalTitle">Agregar / Actualiza un Usuario </h2>
-        <form id="usuarioForm" type="put">
-            <input type="hidden" id="diUsuarioId" />
-            <label>Nombre: <input type="text" id="diNombre" required /></label><br>
-            <label>Apellidos: <input type="text" id="diApellidos" required /></label><br>
-            <label>Email: <input type="email" id="diEmail" required /></label><br>
-            <label>Teléfono: <input type="text" id="diTelefono" required /></label><br>
-            <label>Dirección: <input type="text" id="diDireccion" required /></label><br>
-            <button type="submit">Crea / Actualiza</button>
+    <dialog id="PutdialogUsuario">
+        <h2 id="modalTitle">Actualizar datos del cliente:</h2>
+        <form id="clienteFormUpdate" method="post">
+            <input type="hidden" id="PutdiUsuarioId" name="id"/>
+            <label>Nombre: <input type="text" id="PutdiNombre" name="nombre" required/></label><br>
+            <label>Apellidos: <input type="text" id="PutdiApellidos" name="apellidos" required/></label><br>
+            <label>DNI: <input type="text" id="PutdiDNI" name="dni" required/></label><br>
+            <label>Role: <select id="PutdiRole" name="role" required><option value="ADMIN">ADMIN</option><option value="USER">USER</option></select></label><br>
+            <label>Email: <input type="email" id="PutdiEmail" name="email" required /></label><br>
+            <label>Teléfono: <input type="text" id="PutdiTelefono" name="telefono" required/></label><br>
+            <label>Dirección: <input type="text" id="PutdiDireccion" name="direccion" required/></label><br>
+            <label>Contraseña: <input type="password" id="PutdiPassword" name="password" placeholder="Nueva contraseña (opcional)"/></label><br>
+            <label>Confirmar contraseña: <input type="password" id="PutdiConfirmPassword" name="confirmPassword" placeholder="Confirmar nueva contraseña"/></label><br>
+            <button type="submit">Actualizar el perfil</button>
             <button class="closeButtonModal">Cerrar</button>
         </form>
     </dialog>
-
+        <dialog id="PostdialogUsuario">
+            <h2>Registro de Usuario</h2>
+            <form id="registerForm" onsubmit="event.preventDefault(); registrarUsuario();">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="Postnombre" name="nombre" required />
+                </div>
+                <div class="form-group">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" id="Postapellidos" name="apellidos" required />
+                </div>
+                <div class="form-group">
+                    <label for="dni">DNI:</label>
+                    <input type="text" id="Postdni" name="dni" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="Postemail" name="email" required />
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="Posttelefono" name="telefono" required />
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="Postdireccion" name="direccion" required />
+                </div>
+                <div class="form-group">
+                    <label>Role: <select id="Postrole" name="role" required><option value="ADMIN">ADMIN</option><option value="USER">USER</option></select></label><br>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="Postpassword" name="password" required />
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar Contraseña:</label>
+                    <input type="password" id="PostconfirmPassword" name="confirmPassword" required />
+                </div>
+                <div class="form-group">
+                    <button type="submit">Registrar</button>
+                    <button class="closeButtonModal">Cerrar</button>
+                </div>
+                <div class="form-group">
+                    <p id="error-message" class="error" style="display:none;"></p>
+                </div>
+            </form>
+        </dialog>
     <div th:replace="~{fragments/footer}"></div>
 </body>
 </html>
