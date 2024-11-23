@@ -19,14 +19,28 @@
                     <th>ID</th>
                     <th>Color</th>
                     <th>Marca</th>
+                    <th>Matricula</th>
                     <th>Puertas</th>
                     <th>Autonomía (km)</th>
                     <th>Potencia (cv)</th>
+                    <th>precio_dia</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody id="vehiculosTable">
-                <!-- Aquí se cargarán los vehículos mediante JavaScript -->
+            <tr th:each="vehiculo: ${vehiculos}">
+                <td th:text="${vehiculo.id}"></td>
+                <td th:text="${vehiculo.color}"></td>
+                <td th:text="${vehiculo.marca}"></td>
+                <td th:text="${vehiculo.matricula}"></td>
+                <td th:text="${vehiculo.puertas}"></td>
+                <td th:text="${vehiculo. autonomia_km}"></td>
+                <td th:text="${vehiculo.potencia_cv}"></td>
+                <td th:text="${vehiculo.precio_dia}"></td> 
+                <td>
+                    <button class="editButton">Editar</button>
+                </td>
+            </tr>
             </tbody>
         </table>
     </main>
@@ -41,6 +55,7 @@
             <label>Puertas: <input type="number" id="diPuertas" required /></label><br>
             <label>Autonomía (km): <input type="number" id="diAutonomia_km" required /></label><br>
             <label>Potencia (cv): <input type="number" id="diPotencia_cv" required /></label><br>
+            <label>Precio_dia: <input type="number" id="Precio_dia" required /></label><br>
             <button type="submit">Crear / Actualizar</button>
             <button class="closeButtonModal">Cerrar</button>
         </form>
