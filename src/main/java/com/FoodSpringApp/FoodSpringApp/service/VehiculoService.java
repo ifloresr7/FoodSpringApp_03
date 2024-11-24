@@ -69,5 +69,5 @@ potencia_cv	int(11)
     public void deleteById(int id) {
         vehiculoRepository.deleteById(id);
     }
-    
+
 }

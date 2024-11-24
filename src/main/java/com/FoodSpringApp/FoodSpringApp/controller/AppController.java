@@ -91,6 +91,9 @@ public class AppController {
     @GetMapping("/gestion-alquileres")
     public String alquileresPage(Model model) {
         model.addAttribute("version", this.version);
+        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
+        model.addAttribute("alquileres", alquilerService.obtenerTodosAlquileres());
+        model.addAttribute("usuarios", usuarioService.obtenerTodosUsuarios());
         model.addAttribute("title", "Gestión de alquileres");
         model.addAttribute("description", "Aquí puedes ver todos los alquileres.");
         model.addAttribute("currentPage", "gestion-alquileres");
