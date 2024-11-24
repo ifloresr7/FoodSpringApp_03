@@ -9,7 +9,7 @@ import com.FoodSpringApp.FoodSpringApp.model.Vehiculo;
 import com.FoodSpringApp.FoodSpringApp.repository.VehiculoRepository;
 
 @Service
-public class VehiculoService{
+public class VehiculoService{ 
 
     @Autowired
     private VehiculoRepository  vehiculoRepository;

@@ -12,7 +12,7 @@
     <main class="content">
         <h1 th:text="${title}"></h1>
         <p th:text="${description}"></p>
-        <button id="createButton" class="createButton">Editar Vehículo</button>
+        <button id="createButton" class="createButton">Crear Vehículo</button>
         <!-- Tabla de vehículos -->
         <table>
             <thead>
@@ -49,16 +49,18 @@
     </main>
 
      <!-- DialogUsuario -->  
-     <h2 id="modalTitle">Actualizar datos del Vehiculo:</h2>
+     
      <dialog id="PutdialogVehiculo">        
         <form id="vehiculoFormUpdate" method="post">
+            <h2 id="modalTitle">Editar vehiculo</h2>
             <input type="hidden" id="PutdiVehiculoId" name="id"/>
             <label>Color: <input type="text" id="PutdiColor" name="color" required/></label><br>
             <label>Marca: <input type="text" id="PutdiMarca" name="marca" required/></label><br>
+            <label>Matricula: <input type="text" id="PutdiMatricula" name="matricula" required/></label><br>
             <label>Puertas: <input type="text" id="PutdiPuertas" name="puertas" required/></label><br>
             <label>Autonomia_km:<input type="PutdiAutonomia_km" id="PutdiAutonomia_km" name="autonomia_km" required></label><br>
             <label>Potencia_cv: <input type="PutdiPotencia_cv" id="PutdiPotencia_cv" name="potencia_cv" required /></label><br>
-            <label>Potencia_cv: <input type="PutdiPrecio_dia" id="PutdiPrecio_dia" name="precio_dia" required /></label><br>
+            <label>Precio dia: <input type="PutdiPrecio_dia" id="PutdiPrecio_dia" name="precio_dia" required /></label><br>
             <button type="submit">Actualizar el vehiculo</button>
             <button class="closeButtonModal">Cerrar</button>
         </form>
@@ -67,35 +69,42 @@
     <!-- DialogVehiculo -->               
     <dialog id="PostdialogVehiculo">
         <!-- span class="closeButtonModal close">&times;</span -->
-        <h2 id="modalTitle">Actualizar Vehículo</h2>
+        <h2 id="modalTitle">Crear Vehículo</h2>
         <form id="registerForm"  onsubmit="event.preventDefault(); registrarVehiculo();">
             <input type="hidden" id="diVehiculoId" />
             <div class="form-group">
                 <label for="color">Color: </label>
-                <input type="text" id="diColor" name="color" required /> 
+                <input type="text" id="Postcolor" name="color" required /> 
             </div>
             <div class="form-group">
                 <label for="marca">Marca: 
-                <input type="text" id="diMarca" name="marca" required />
+                <input type="text" id="Postmarca" name="marca" required />
             </div>
+          
+            <div class="form-group">
+                <label for="matricula">Matricula: 
+                <input type="text" id="Postmatricula" name="matricula" required />
+            </div>
+            
+
             <div class="form-group">
                 <label for="autonomia_km">Puertas:</label> 
-                <input type="number" id="diPuertas" required /><br>
+                <input type="number" id="Postpuertas" required /><br>
             </div>
             <div class="form-group">
                 <label for="autonomia_km">Autonomía (km): </label>
-                <input type="number" id="diAutonomia_km" name="autonomia_km"required />
+                <input type="number" id="Postautonomia_km" name="autonomia_km"required />
             </div>
             <div class="form-group">
                 <label for="potencia_cv">Potencia (cv): </label>
-                <input type="number" id="diPotencia_cv" name="potencia_cv" required /><br>    
+                <input type="number" id="Postpotencia_cv" name="potencia_cv" required /><br>    
             </div>
             <div class="form-group">
                 <label for="precio_dia">Precio_dia: </label>
-                <input type="number" id="diPrecio_dia" name="precio_dia" required /><br>
+                <input type="number" id="Postprecio_dia" name="precio_dia" required /><br>
             </div>
             <div class="form-group">
-                <button type="submit">Crear / Actualizar</button>
+                <button type="submit">Crear </button>
                 <button class="closeButtonModal">Cerrar</button>
             </div>
         </form>
