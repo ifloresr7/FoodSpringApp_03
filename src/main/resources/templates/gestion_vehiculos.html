@@ -8,10 +8,11 @@
 </head>
 <body>
     <div th:replace="~{fragments/header}"></div>
+    <!-- Contenido principal -->
     <main class="content">
         <h1 th:text="${title}"></h1>
         <p th:text="${description}"></p>
-        <button id="createButton" class="createButton">Añadir Nuevo Vehículo</button>
+        <button id="createButton" class="createButton">Editar Vehículo</button>
         <!-- Tabla de vehículos -->
         <table>
             <thead>
@@ -28,16 +29,16 @@
                 </tr>
             </thead>
             <tbody id="vehiculosTable">
-           <tr th:each="vehiculo: ${vehiculos}" th:data-id="${vehiculo.id}">
-           
-                <td th:text="${vehiculo.id}"></td>
-                <td th:text="${vehiculo.color}"></td>
-                <td th:text="${vehiculo.marca}"></td>
-                <td th:text="${vehiculo.matricula}"></td>
-                <td th:text="${vehiculo.puertas}"></td>
-                <td th:text="${vehiculo. autonomia_km}"></td>
-                <td th:text="${vehiculo.potencia_cv}"></td>
-                <td th:text="${vehiculo.precio_dia}"></td> 
+            <tr th:each="vehiculo: ${vehiculos}" th:data-id="${vehiculo.id}">                 
+                <td th:data-id="${vehiculo.id}" th:text="${vehiculo.id}"></td>           
+                <td th:data-color="${vehiculo.color}" th:text="${vehiculo.color}"></td>
+                <td th:data-marca="${vehiculo.marca}" th:text="${vehiculo.marca}"></td>
+                <td th:data-matricula="${vehiculo.matricula}" th:text="${vehiculo.matricula}"></td>
+                <td th:data-puertas="${vehiculo.puertas}" th:text="${vehiculo.puertas}"></td>
+                <td th:data-autonomia_km="${vehiculo.autonomia_km}"th:text="${vehiculo.autonomia_km}"></td>
+                <td th:data-potencia_cv="${vehiculo.potencia_cv}" th:text="${vehiculo.potencia_cv}"></td>
+                <td th:data-precio_dia="${vehiculo.precio_dia}" th:text="${vehiculo.precio_dia}"></td> 
+            
                 <td>
                     <button class="editButton">Editar</button>
                     <button class="deleteButton">Eliminar</button>
@@ -50,27 +51,23 @@
      <!-- DialogUsuario -->  
      <h2 id="modalTitle">Actualizar datos del Vehiculo:</h2>
      <dialog id="PutdialogVehiculo">        
-        <h2 id="modalTitle">Actualizar datos del Vehiculo:</h2>
         <form id="vehiculoFormUpdate" method="post">
-            <input type="hidden" id="PutdiClienteId" name="id"/>
+            <input type="hidden" id="PutdiVehiculoId" name="id"/>
             <label>Color: <input type="text" id="PutdiColor" name="color" required/></label><br>
             <label>Marca: <input type="text" id="PutdiMarca" name="marca" required/></label><br>
             <label>Puertas: <input type="text" id="PutdiPuertas" name="puertas" required/></label><br>
-            <label>Autonomia_km: <select id="PutdiAutonomia_km" name="autonomia_km" required>
-            <label>Potencia_cv: <input type="PutdiPotencia_cv" id="PutdiEmail" name="potencia_cv" required /></label><br>
-            
-            <button type="submit">Actualizar el perfil</button>
+            <label>Autonomia_km:<input type="PutdiAutonomia_km" id="PutdiAutonomia_km" name="autonomia_km" required></label><br>
+            <label>Potencia_cv: <input type="PutdiPotencia_cv" id="PutdiPotencia_cv" name="potencia_cv" required /></label><br>
+            <label>Potencia_cv: <input type="PutdiPrecio_dia" id="PutdiPrecio_dia" name="precio_dia" required /></label><br>
+            <button type="submit">Actualizar el vehiculo</button>
             <button class="closeButtonModal">Cerrar</button>
         </form>
     </dialog>
 
-
-
-
     <!-- DialogVehiculo -->               
     <dialog id="PostdialogVehiculo">
         <!-- span class="closeButtonModal close">&times;</span -->
-        <h2 id="modalTitle">Agregar / Actualizar Vehículo</h2>
+        <h2 id="modalTitle">Actualizar Vehículo</h2>
         <form id="registerForm"  onsubmit="event.preventDefault(); registrarVehiculo();">
             <input type="hidden" id="diVehiculoId" />
             <div class="form-group">

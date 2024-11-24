@@ -1,18 +1,21 @@
 package com.FoodSpringApp.FoodSpringApp.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 //import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-//import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.FoodSpringApp.FoodSpringApp.model.Usuario;
 import com.FoodSpringApp.FoodSpringApp.model.Vehiculo;
 import com.FoodSpringApp.FoodSpringApp.service.VehiculoService;
 
@@ -23,23 +26,56 @@ public class VehiculoController {
     @Autowired
     private VehiculoService vehiculoService;
 
-    @PostMapping
-    public ResponseEntity<Vehiculo> guardarVehiculo(@RequestBody Vehiculo vehiculo) {
-        Vehiculo nuevoVehiculo = vehiculoService.save(vehiculo);
-        return ResponseEntity.ok(nuevoVehiculo);
+   @PostMapping("/save-vehiculo")
+    public ResponseEntity<Map<String, String>> guardarVehiculo(@RequestBody Vehiculo vehiculo) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            if (vehiculo.getRole() != null && !vehiculo.getRole().isEmpty()) {
+                vehiculo.setRole(vehiculo.getRole());
+            }else{
+                vehiculo.setRole("USER");
+            }
+            Vehiculo nuevoVehiculo = vehiculoService.save(vehiculo);
+            response.put("message", "vehiculo registrado con éxito.");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("message", "Hubo un error al registrar el vehiculo: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
+        }
     }
-
+/* 
     @PutMapping("/{id}")
     public ResponseEntity<Vehiculo> actualizarVehiculo(@PathVariable int id, @RequestBody Vehiculo vehiculoData) {
         Vehiculo vehiculoActualizado = vehiculoService.update(id, vehiculoData);
         return vehiculoActualizado != null ? ResponseEntity.ok(vehiculoActualizado) : ResponseEntity.notFound().build();
     }
-
+*/
     // Eliminar un vehiculo y redirigir a la lista de vehiculos
-    @DeleteMapping("/eliminar/{id}")
+   /*   @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarVehiculo(@PathVariable int id) {
         vehiculoService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }*/
+   
+
+
+    @PutMapping("/update-vehiculo")
+    public ResponseEntity<Vehiculo> actualizarVehiculo(@RequestBody Vehiculo vehiculoData) {
+        Vehiculo vehiculoActualizado = vehiculoService.update(vehiculoData.getId(), vehiculoData);
+        System.out.println(vehiculoActualizado);
+        if (vehiculoActualizado != null) {
+            return ResponseEntity.ok(vehiculoActualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-    
+
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<Void> eliminarVehiculo(@PathVariable int id) {
+        if (vehiculoService.findById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        vehiculoService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

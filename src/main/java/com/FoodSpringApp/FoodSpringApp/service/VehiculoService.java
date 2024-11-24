@@ -31,26 +31,34 @@ public class VehiculoService{
         return vehiculoRepository.findById(id).orElse(null);
     }
 
-
-    /**
-     * 
-     */
+/**
+ * 
+ * @param id identificador unico del vehiculo
+ * @param vehiculoData con los datos a actualizar
+ * @return
+ */
     public Vehiculo update(int id, Vehiculo vehiculoData) {
   
-  
-        Vehiculo vehiculo = findById(id);
-        if (vehiculo != null) {
-            vehiculo.setAutonomia_km(vehiculoData.getAutonomia_km());
-            vehiculo.setColor(vehiculoData.getColor());
-            vehiculo.setMarca(vehiculoData.getMarca());
-            vehiculo.setMatricula(vehiculoData.getMatricula());
-            vehiculo.setPotencia_cv(vehiculoData.getPotencia_cv());
-            vehiculo.setPuertas(vehiculoData.getPuertas());
-            vehiculo.setPrecio_dia(vehiculoData.getPrecio_dia());
-
-            return vehiculoRepository.save(vehiculo);
-        }
-    
+        try {
+            Vehiculo vehiculoExistente = vehiculoRepository.findById(id).orElse(null);
+            if (vehiculoExistente == null) {
+                return null;
+            }
+ 
+                vehiculoExistente.setAutonomia_km(vehiculoData.getAutonomia_km());
+                vehiculoExistente.setColor(vehiculoData.getColor());
+                vehiculoExistente.setMarca(vehiculoData.getMarca());
+                vehiculoExistente.setMatricula(vehiculoData.getMatricula());
+                vehiculoExistente.setPotencia_cv(vehiculoData.getPotencia_cv());
+                vehiculoExistente.setPuertas(vehiculoData.getPuertas());
+                vehiculoExistente.setPrecio_dia(vehiculoData.getPrecio_dia());
+                
+                return vehiculoRepository.save(vehiculoExistente);
+ 
+        } catch (Exception e) {
+            String serror=     e.getMessage();
+            System.err.println(serror);
+          }
         return null; // O lanza una excepción si no existe
     }
 

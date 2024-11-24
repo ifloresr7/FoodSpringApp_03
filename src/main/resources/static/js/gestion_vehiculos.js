@@ -1,6 +1,8 @@
 
 document.querySelectorAll('.editButton').forEach(button => {
     button.addEventListener('click', function () {
+        const row = this.closest('tr');
+
         const PutvehiculoId = row.querySelector('td[data-id]').getAttribute('data-id');
         const Putcolor = row.querySelector('td[data-color]').getAttribute('data-color');
         const Putmarca = row.querySelector('td[data-marca]').getAttribute('data-marca');
@@ -9,13 +11,14 @@ document.querySelectorAll('.editButton').forEach(button => {
         const Putpotencia_cv = row.querySelector('td[data-potencia_cv]').getAttribute('data-potencia_cv');
         const Putprecio_dia = row.querySelector('td[data-precio_dia]').getAttribute('data-precio_dia');
 
-        document.getElementById('PutVehiculoId').value = PutvehiculoId;
-        document.getElementById('PutColor').value = Putcolor;
-        document.getElementById('PutMarca').value = Putmarca;
-        document.getElementById('PutPuertas').value = Putpuertas;
-        document.getElementById('PutAutonomia_km').value = Putautonomia_km;
-        document.getElementById('PutPotencia_cv').value = Putpotencia_cv;
-        document.getElementById('PutPrecio_dia').value = Putprecio_dia;
+        document.getElementById('PutdiVehiculoId').value = PutvehiculoId;
+        document.getElementById('PutdiColor').value = Putcolor;
+        document.getElementById('PutdiMarca').value = Putmarca;
+        document.getElementById('PutdiPuertas').value = Putpuertas;
+        document.getElementById('PutdiAutonomia_km').value = Putautonomia_km;
+                                  
+        document.getElementById('PutdiPotencia_cv').value = Putpotencia_cv;
+        document.getElementById('PutdiPrecio_dia').value = Putprecio_dia;
 
         document.getElementById('PutdialogVehiculo').showModal();
     });
