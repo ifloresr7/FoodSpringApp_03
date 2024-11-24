@@ -8,6 +8,28 @@ closeButton.addEventListener("click", () => {
     crearAlquilerDialog.close();
 });
 
+document.querySelectorAll('.editButton').forEach(button => {
+    button.addEventListener('click', function () {
+        const row = this.closest('tr');
+
+        const alquilerId = row.getAttribute('data-id');
+        const clienteId = row.children[1].textContent;
+        const vehiculoId = row.children[2].textContent;
+        const fechaInicio = row.children[3].textContent;
+        const fechaFin = row.children[4].textContent;
+        const precio = row.children[5].textContent;
+
+        document.getElementById('alquilerId').value = alquilerId;
+        document.getElementById('clienteId').value = clienteId;
+        document.getElementById('vehiculoId').value = vehiculoId;
+        document.getElementById('fechaInicio').value = fechaInicio;
+        document.getElementById('fechaFin').value = fechaFin;
+        document.getElementById('precio').textContent = precio;
+
+        document.getElementById('crearAlquilerDialog').showModal();
+    });
+});
+
 const formCrearAlquiler = document.getElementById("formCrearAlquiler");
 
 formCrearAlquiler.addEventListener("submit", async (event) => {
@@ -75,4 +97,25 @@ function calculatePrice(){
     const differenceInDays = differenceInTime / (1000 * 3600 * 24) + 1;
     const totalPrice = differenceInDays * price;
     document.getElementById('precioTotal').innerHTML = totalPrice.toFixed(2) + '€';
+}
+
+function calculateUpdatedPrice(fechaInicio, fechaFin, price) {
+    if (!fechaInicio || !fechaFin || !price) {
+        return 0;
+    }
+    const startDate = new Date(fechaInicio);
+    const endDate = new Date(fechaFin);
+
+    if (endDate < startDate) {
+        alert('La fecha de fin no puede ser anterior a la fecha de inicio.');
+        document.getElementById('fechaFin').value = fechaInicio;
+        return 0;
+    }
+
+    const differenceInTime = endDate - startDate;
+    const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)) + 1;
+    const totalPrice = differenceInDays * parseFloat(price);
+
+    document.getElementById('precio').textContent = totalPrice.toFixed(2) + '€';
+    return totalPrice.toFixed(2);
 }
