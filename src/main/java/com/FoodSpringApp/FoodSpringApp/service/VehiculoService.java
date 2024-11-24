@@ -14,17 +14,21 @@ public class VehiculoService{
     @Autowired
     private VehiculoRepository  vehiculoRepository;
 
-    public List<Vehiculo> obtenerTodosVehiculos() {
-        return vehiculoRepository.findAll();
+    public VehiculoService(VehiculoRepository vehiculoRepository) {
+        this.vehiculoRepository = vehiculoRepository;
     }
-    /**
-     * para actualizar el vehiculo
-     * @param vehiculo
-     * @return
-     */
+ 
     public Vehiculo save(Vehiculo vehiculo) {
         return vehiculoRepository.save(vehiculo);
     }
+    public List<Vehiculo> obtenerTodosVehiculos() {
+        return vehiculoRepository.findAll();
+    }
+    
+    public List<Vehiculo> findAll() {
+        return vehiculoRepository.findAll();
+    }
+
 
 
     public Vehiculo findById(int id) {

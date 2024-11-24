@@ -3,8 +3,6 @@ package com.FoodSpringApp.FoodSpringApp.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-//import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.FoodSpringApp.FoodSpringApp.model.Usuario;
 import com.FoodSpringApp.FoodSpringApp.model.Vehiculo;
 import com.FoodSpringApp.FoodSpringApp.service.VehiculoService;
 
@@ -30,11 +27,13 @@ public class VehiculoController {
     public ResponseEntity<Map<String, String>> guardarVehiculo(@RequestBody Vehiculo vehiculo) {
         Map<String, String> response = new HashMap<>();
         try {
+            /* 
             if (vehiculo.getRole() != null && !vehiculo.getRole().isEmpty()) {
                 vehiculo.setRole(vehiculo.getRole());
             }else{
                 vehiculo.setRole("USER");
             }
+                */
             Vehiculo nuevoVehiculo = vehiculoService.save(vehiculo);
             response.put("message", "vehiculo registrado con éxito.");
             return ResponseEntity.ok(response);
@@ -43,20 +42,7 @@ public class VehiculoController {
             return ResponseEntity.status(500).body(response);
         }
     }
-/* 
-    @PutMapping("/{id}")
-    public ResponseEntity<Vehiculo> actualizarVehiculo(@PathVariable int id, @RequestBody Vehiculo vehiculoData) {
-        Vehiculo vehiculoActualizado = vehiculoService.update(id, vehiculoData);
-        return vehiculoActualizado != null ? ResponseEntity.ok(vehiculoActualizado) : ResponseEntity.notFound().build();
-    }
-*/
-    // Eliminar un vehiculo y redirigir a la lista de vehiculos
-   /*   @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminarVehiculo(@PathVariable int id) {
-        vehiculoService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }*/
-   
+
 
 
     @PutMapping("/update-vehiculo")
