@@ -94,4 +94,10 @@ public class AlquilerService{
         return alquilerRepository.save(alquilerExistente);
     }
     
+    public void eliminar(int id) {
+        Alquiler alquiler = alquilerRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Alquiler no encontrado."));
+        alquilerRepository.delete(alquiler);
+    }
+    
 }

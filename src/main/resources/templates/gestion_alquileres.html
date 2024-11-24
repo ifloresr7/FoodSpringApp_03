@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody id="alquileresTable">
-                <tr th:each="alquiler: ${alquileres}">
+                <tr th:each="alquiler: ${alquileres}" th:attr="data-id=${alquiler.id}">
                     <td th:text="${alquiler.id}"></td>
                     <td th:text="${alquiler.clienteId}"></td>
                     <td th:text="${alquiler.vehiculoId}"></td>
@@ -35,6 +35,7 @@
                     <td th:text="${alquiler.precio}"></td>
                     <td>
                         <button class="editButton">Editar</button>
+                        <button class="deleteButton" style="background-color: red; color: white;">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
@@ -57,7 +58,6 @@
                         <th:block th:each="vehiculo : ${vehiculos}">
                             <option th:value="${vehiculo.id}" th:data-price="${vehiculo.precio_dia}"
                                 th:text="${vehiculo.id} + ' - ' + ${vehiculo.marca} + ' (' + ${vehiculo.matricula} + ')'">
-                            </option>
                         </th:block>
                     </select>
                 </div>

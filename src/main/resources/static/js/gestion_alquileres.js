@@ -26,6 +26,14 @@ document.querySelectorAll('.editButton').forEach(button => {
         document.getElementById('fechaFin').value = fechaFin;
         document.getElementById('precio').textContent = precio;
 
+        // Actualizar el precio por día y calcular el precio total
+        const selectedOption = document.querySelector(`#vehiculoId option[value="${vehiculoId}"]`);
+        if (selectedOption) {
+            price = selectedOption.getAttribute('data-price');
+            document.getElementById('precio').innerHTML = price + '€';
+            calculatePrice();
+        }
+        
         document.getElementById('crearAlquilerDialog').showModal();
     });
 });
@@ -34,33 +42,44 @@ const formCrearAlquiler = document.getElementById("formCrearAlquiler");
 
 formCrearAlquiler.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    const alquilerId = document.getElementById("alquilerId").value; // Obtén el ID del formulario
     const alquilerData = {
+        id: alquilerId || null, // Asegúrate de enviar el ID solo si existe
         clienteId: document.getElementById("clienteId").value,
         vehiculoId: document.getElementById("vehiculoId").value,
         fechaInicio: document.getElementById("fechaInicio").value,
         fechaFin: document.getElementById("fechaFin").value,
-        precio: document.getElementById("precio").value
+        precio: document.getElementById("precio").textContent.replace('€', '')
     };
+
+    const url = alquilerId 
+        ? '/api/alquileres/actualizar-alquiler' // Usar PUT si existe un ID
+        : '/api/alquileres/crear-alquiler';    // Usar POST si es nuevo
+
+    const method = alquilerId ? 'PUT' : 'POST'; // Método HTTP dinámico
+
     try {
-        const response = await fetch('/api/alquileres/crear-alquiler', {
-            method: 'POST',
+        const response = await fetch(url, {
+            method: method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(alquilerData)
         });
+
         if (response.ok) {
-            alert("Alquiler creado exitosamente");
+            alert(alquilerId ? "Alquiler actualizado exitosamente" : "Alquiler creado exitosamente");
             crearAlquilerDialog.close();
             formCrearAlquiler.reset();
+            window.location.reload();
         } else {
-            alert("Error al crear el alquiler.");
+            alert("Error al procesar el alquiler.");
         }
     } catch (error) {
         console.error("Error:", error);
         alert("Hubo un problema al comunicarse con el servidor.");
-    } finally {
-        window.location.reload();
     }
 });
+
 
 let price;
 let dateinit;
@@ -119,3 +138,29 @@ function calculateUpdatedPrice(fechaInicio, fechaFin, price) {
     document.getElementById('precio').textContent = totalPrice.toFixed(2) + '€';
     return totalPrice.toFixed(2);
 }
+
+document.querySelectorAll('.deleteButton').forEach(button => {
+    button.addEventListener('click', async function () {
+        const row = this.closest('tr');
+        const alquilerId = row.getAttribute('data-id'); // Captura el ID del alquiler de la fila
+
+        if (confirm(`¿Estás seguro de que deseas eliminar el alquiler con ID ${alquilerId}?`)) {
+            try {
+                const response = await fetch(`/api/alquileres/eliminar-alquiler/${alquilerId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                if (response.ok) {
+                    alert("Alquiler eliminado exitosamente.");
+                    row.remove(); // Eliminar la fila de la tabla
+                } else {
+                    alert("Error al eliminar el alquiler.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Hubo un problema al comunicarse con el servidor.");
+            }
+        }
+    });
+});

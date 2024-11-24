@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -95,5 +97,17 @@ public class AlquilerController {
                                 .body("Error al actualizar el alquiler: " + e.getMessage());
         }
     }
+
+    @DeleteMapping("/eliminar-alquiler/{id}")
+    public ResponseEntity<?> eliminarAlquiler(@PathVariable int id) {
+        try {
+            alquilerService.eliminar(id);
+            return ResponseEntity.ok("Alquiler eliminado exitosamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body("Error al eliminar el alquiler: " + e.getMessage());
+        }
+    }
+
 
 }
