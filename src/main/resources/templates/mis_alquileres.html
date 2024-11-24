@@ -18,7 +18,7 @@
         <table id="tablaAlquileres">
             <thead>
                 <tr>
-                    <th>Alquiler ID</th>
+                    <th>Numero Alquiler</th>
                     <th>Fecha de inicio</th>
                     <th>Fecha de fin</th>
                     <th>Vehiculo alquilado</th>
@@ -30,7 +30,7 @@
                     <td th:data-id="${alquiler.id}" th:text="${alquiler.id}"></td>
                     <td th:data-fechainicio="${alquiler.fechaInicio}" th:text="${alquiler.fechaInicio}"></td>
                     <td th:data-fechafin="${alquiler.fechaFin}" th:text="${alquiler.fechaFin}"></td>
-                    <td th:data-vehiculoid="${alquiler.vehiculoId}" th:text="${alquiler.vehiculoId}"></td>
+                    <td th:text="${alquiler.vehiculoInfo}"></td>
                     <td th:data-precio="${alquiler.precio}" th:text="${alquiler.precio}"></td>
                 </tr>
             </tbody>

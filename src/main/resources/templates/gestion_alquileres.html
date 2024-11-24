@@ -16,9 +16,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Cliente ID</th>
-                    <th>Vehículo ID</th>
+                    <th>Numero Alquiler</th>
+                    <th>Usuario</th>
+                    <th>Vehículo</th>
                     <th>Fecha de Inicio</th>
                     <th>Fecha de Fin</th>
                     <th>Precio</th>
@@ -28,8 +28,8 @@
             <tbody id="alquileresTable">
                 <tr th:each="alquiler: ${alquileres}" th:attr="data-id=${alquiler.id}">
                     <td th:text="${alquiler.id}"></td>
-                    <td th:text="${alquiler.clienteId}"></td>
-                    <td th:text="${alquiler.vehiculoId}"></td>
+                    <td th:text="${mapaUsuarios[alquiler.clienteId].id + ' - ' + mapaUsuarios[alquiler.clienteId].nombre + ' ' + mapaUsuarios[alquiler.clienteId].apellidos}"></td>
+                    <td th:text="${mapaVehiculos[alquiler.vehiculoId].id + ' - ' + mapaVehiculos[alquiler.vehiculoId].marca + ' (' + mapaVehiculos[alquiler.vehiculoId].matricula + ')'}"></td>
                     <td th:text="${alquiler.fechaInicio}"></td>
                     <td th:text="${alquiler.fechaFin}"></td>
                     <td th:text="${alquiler.precio}"></td>

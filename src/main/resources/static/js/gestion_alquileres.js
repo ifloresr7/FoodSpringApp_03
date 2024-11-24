@@ -33,6 +33,11 @@ document.querySelectorAll('.editButton').forEach(button => {
             document.getElementById('precio').innerHTML = price + '€';
             calculatePrice();
         }
+
+         // Asegurar cálculo del precio total
+         dateinit = fechaInicio;
+         dateend = fechaFin;
+         calculatePrice();
         
         document.getElementById('crearAlquilerDialog').showModal();
     });
