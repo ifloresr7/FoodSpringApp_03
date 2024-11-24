@@ -1,35 +1,93 @@
-let vehiculosList;
+document.querySelectorAll('.editButton').forEach(button => {
+    button.addEventListener('click', function () {
+        const row = this.closest('tr');
+                   
+        const PutvehiculoId = row.querySelector('td[data-id]').getAttribute('data-id');
+        const Putcolor = row.querySelector('td[data-color]').getAttribute('data-color');
+        const Putmarca = row.querySelector('td[data-marca]').getAttribute('data-marca');
+        const Putmatricula = row.querySelector('td[data-matricula]').getAttribute('data-matricula');
+        const Putpuertas = row.querySelector('td[data-puertas]').getAttribute('data-puertas');
+        const Putautonomia_km = row.querySelector('td[data-autonomia_km]').getAttribute('data-autonomia_km');
+        const Putpotencia_cv  = row.querySelector('td[data-potencia_cv]').getAttribute('data-potencia_cv');
+        const Putprecio_dia = row.querySelector('td[data-precio_dia]').getAttribute('data-precio_dia');
 
-const dialogVehiculo = document.getElementById('vehiculoModal');
-const diVehiculoId = document.getElementById('diVehiculoId');
-const diColor = document.getElementById('diColor'); // Agregado para el color
-const diMarca = document.getElementById('diMarca');
-const diPuertas = document.getElementById('diPuertas');
-const diAutonomia_km = document.getElementById('diAutonomia_km');
-const diPotencia_cv = document.getElementById('diPotencia_cv');
+
+        document.getElementById('PutdiVehiculoId').value = PutvehiculoId;
+        document.getElementById('PutdiColor').value = Putcolor;
+        document.getElementById('PutdiMarca').value = Putmarca;
+        document.getElementById('PutdiMatricula').value =Putmatricula; 
+        document.getElementById('PutdiPuertas').value = Putpuertas;
+        document.getElementById('PutdiAutonomia_km').value = Putautonomia_km;
+        document.getElementById('PutdiPotencia_cv').value = Putpotencia_cv;      
+        document.getElementById('PutdiPrecio_dia').value = Putprecio_dia;
+        
+        document.getElementById('PutdialogVehiculo').showModal();
+    });
+});
+
+document.getElementById('PutdialogVehiculo').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const PutdiVehiculolId = document.getElementById('PutdiVehiculoId').value;
+    const PutdiColor = document.getElementById('PutdiColor').value;    
+    const PutdiMarca = document.getElementById('PutdiMarca').value;
+    const PutdiMatricula = document.getElementById('PutdiMatricula').value;
+    const PutdiPuertas = document.getElementById('PutdiPuertas').value;
+    const PutdiAutonomia_km = document.getElementById('PutdiAutonomia_km').value;
+    const PutdiPotencia_cv = document.getElementById('PutdiPotencia_cv').value;
+    const PutdiPrecio_dia = document.getElementById('PutdiPrecio_dia').value;
+  
+
+    const vehiculoData = {
+        id: PutdiVehiculolId,
+        color: PutdiColor,
+        matricula: PutdiMatricula,
+        marca: PutdiMarca,
+        puertads: PutdiPuertas,        
+        autonomia_km: PutdiAutonomia_km,
+        potencia_cv: PutdiPotencia_cv,
+        Precio_dia: PutdiPrecio_dia  
+    };
+
+    fetch('/api/vehiculos/update-vehiculo', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(vehiculoData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al actualizar el vehiculo');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data) {
+            alert('Vehiculo actualizado con éxito.');
+        } else {
+            alert('No se pudo actualizar el vehiculo.');
+        }
+    })
+    .catch(error => {
+        console.error('Error al actualizar el perfil:', error);
+        alert('Hubo un problema al intentar actualizar el perfil.');
+    }).finally(() => {
+        window.location.reload();
+    });
+});
 
 document.querySelectorAll('.closeButtonModal').forEach(button => {
     button.addEventListener('click', (e) => {
         e.preventDefault();
-        dialogVehiculo.close();
-    });
-});
-
-document.querySelectorAll('.editButton').forEach(button => {
-    button.addEventListener('click', function () {
-        const id = this.closest('tr').getAttribute('data-id');
-        const vehiculo = vehiculosList.find(vehiculo => vehiculo.id === parseInt(id, 10));
-        if (vehiculo) {
-            diVehiculoId.value = vehiculo.id;
-            diColor.value = vehiculo.color;
-            diMarca.value = vehiculo.marca;
-            diPuertas.value = vehiculo.puertas;
-            diAutonomia_km.value = vehiculo.autonomia_km;
-            diPotencia_cv.value = vehiculo.potencia_cv;
-            dialogVehiculo.showModal();
+        const closestDialog = button.closest('dialog');
+        if (closestDialog) {
+            closestDialog.close();
         }
     });
 });
+
 
 document.querySelectorAll('.deleteButton').forEach(button => {
     button.addEventListener('click', function () {
@@ -38,54 +96,61 @@ document.querySelectorAll('.deleteButton').forEach(button => {
     });
 });
 
-document.querySelector('.createButton').addEventListener('click', function () {
-    diVehiculoId.value = "";
-    diColor.value = "";
-    diMarca.value = "";
-    diPuertas.value = "";
-    diAutonomia_km.value = "";
-    diPotencia_cv.value = "";
-    dialogVehiculo.showModal();
-});
-
-// Función para guardar o actualizar un vehiculo
-document.getElementById('vehiculoForm').addEventListener('submit', function (e) { // Cambié vehciuloForm a vehiculoForm
-    e.preventDefault();
-    const vehiculoData = {
-        id: diVehiculoId.value,
-        color: diColor.value,
-        marca: diMarca.value,
-        puertas: diPuertas.value,
-        autonomia_km: diAutonomia_km.value,
-        potencia_cv: diPotencia_cv.value
-    };
-    const method = vehiculoData.id ? 'PUT' : 'POST';
-    const url = vehiculoData.id ? `/api/vehiculos/${vehiculoData.id}` : '/api/vehiculos';
-
-    fetch(url, {
-        method: method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(vehiculoData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            alert('Vehiculo creado/actualizado correctamente');
-            dialogVehiculo.close();
-            cargarVehiculos();
-        })
-        .catch(error => console.error('Error al guardar el vehiculo:', error));
-});
-
-// Función para eliminar un vehiculo
 function eliminarVehiculo(id) {
     if (confirm('¿Estás seguro de que deseas eliminar este vehiculo?')) {
         fetch(`/api/vehiculos/eliminar/${id}`, {
             method: 'DELETE',
         })
-            .then(() => {
-                alert('Vehiculo eliminado correctamente');
-                cargarVehiculos(); // Refresca la lista de vehiculos
-            })
-            .catch(error => console.error('Error al eliminar el vehiculo:', error));
+        .then(() => {
+            alert('Vehiculo eliminado correctamente');
+        })
+        .catch(error => console.error('Error al eliminar el vehiculo:', error))
+        .finally(() => {
+            window.location.reload();
+        });
     }
+}
+
+document.getElementById('createButton').addEventListener('click', function() {
+    document.getElementById('PostdialogVehiculo').showModal();
+});
+
+   
+
+function registrarVehiculo() {
+    const formData = {
+        color: document.getElementById('Postcolor').value,
+        marca: document.getElementById('Postmarca').value,
+        matricula: document.getElementById('Postmatricula').value,
+        puertas: document.getElementById('Postpuertas').value,
+        autonomia_km: document.getElementById('Postautonomia_km').value,
+        potencia_cv: document.getElementById('Postpotencia_cv').value,
+        precio_dia: document.getElementById('Postprecio_dia').value,
+        
+    };
+    
+    fetch('/api/vehiculos/save-vehiculo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+        } else {
+            document.getElementById('error-message').style.display = 'block';
+            document.getElementById('error-message').textContent = 'Hubo un error al registrar el vehiculo.';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('error-message').style.display = 'block';
+        document.getElementById('error-message').textContent = 'Hubo un error al registrar el vehiculo.';
+    })
+    .finally(() => {
+        window.location.reload();
+    });
 }

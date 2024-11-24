@@ -8,10 +8,11 @@
 </head>
 <body>
     <div th:replace="~{fragments/header}"></div>
+    <!-- Contenido principal -->
     <main class="content">
         <h1 th:text="${title}"></h1>
         <p th:text="${description}"></p>
-        <button class="createButton">Añadir Nuevo Vehículo</button>
+        <button id="createButton" class="createButton">Crear Vehículo</button>
         <!-- Tabla de vehículos -->
         <table>
             <thead>
@@ -28,39 +29,88 @@
                 </tr>
             </thead>
             <tbody id="vehiculosTable">
-            <tr th:each="vehiculo: ${vehiculos}">
-                <td th:text="${vehiculo.id}"></td>
-                <td th:text="${vehiculo.color}"></td>
-                <td th:text="${vehiculo.marca}"></td>
-                <td th:text="${vehiculo.matricula}"></td>
-                <td th:text="${vehiculo.puertas}"></td>
-                <td th:text="${vehiculo. autonomia_km}"></td>
-                <td th:text="${vehiculo.potencia_cv}"></td>
-                <td th:text="${vehiculo.precio_dia}"></td> 
+            <tr th:each="vehiculo: ${vehiculos}" th:data-id="${vehiculo.id}">                 
+                <td th:data-id="${vehiculo.id}" th:text="${vehiculo.id}"></td>           
+                <td th:data-color="${vehiculo.color}" th:text="${vehiculo.color}"></td>
+                <td th:data-marca="${vehiculo.marca}" th:text="${vehiculo.marca}"></td>
+                <td th:data-matricula="${vehiculo.matricula}" th:text="${vehiculo.matricula}"></td>
+                <td th:data-puertas="${vehiculo.puertas}" th:text="${vehiculo.puertas}"></td>
+                <td th:data-autonomia_km="${vehiculo.autonomia_km}"th:text="${vehiculo.autonomia_km}"></td>
+                <td th:data-potencia_cv="${vehiculo.potencia_cv}" th:text="${vehiculo.potencia_cv}"></td>
+                <td th:data-precio_dia="${vehiculo.precio_dia}" th:text="${vehiculo.precio_dia}"></td> 
+            
                 <td>
                     <button class="editButton">Editar</button>
+                    <button class="deleteButton">Eliminar</button>
                 </td>
             </tr>
             </tbody>
         </table>
     </main>
-    <!-- DialogVehiculo -->
-    <dialog id="vehiculoModal">
-        <span class="closeButtonModal close">&times;</span>
-        <h2 id="modalTitle">Agregar / Actualizar Vehículo</h2>
-        <form id="vehiculoForm">
-            <input type="hidden" id="diVehiculoId" />
-            <label>Color: <input type="text" id="diColor" required /></label><br>
-            <label>Marca: <input type="text" id="diMarca" required /></label><br>
-            <label>Puertas: <input type="number" id="diPuertas" required /></label><br>
-            <label>Autonomía (km): <input type="number" id="diAutonomia_km" required /></label><br>
-            <label>Potencia (cv): <input type="number" id="diPotencia_cv" required /></label><br>
-            <label>Precio_dia: <input type="number" id="Precio_dia" required /></label><br>
-            <button type="submit">Crear / Actualizar</button>
+
+     <!-- DialogUsuario -->  
+     
+     <dialog id="PutdialogVehiculo">        
+        <form id="vehiculoFormUpdate" method="post">
+            <h2 id="modalTitle">Editar vehiculo</h2>
+            <input type="hidden" id="PutdiVehiculoId" name="id"/>
+            <label>Color: <input type="text" id="PutdiColor" name="color" required/></label><br>
+            <label>Marca: <input type="text" id="PutdiMarca" name="marca" required/></label><br>
+            <label>Matricula: <input type="text" id="PutdiMatricula" name="matricula" required/></label><br>
+            <label>Puertas: <input type="text" id="PutdiPuertas" name="puertas" required/></label><br>
+            <label>Autonomia_km:<input type="PutdiAutonomia_km" id="PutdiAutonomia_km" name="autonomia_km" required></label><br>
+            <label>Potencia_cv: <input type="PutdiPotencia_cv" id="PutdiPotencia_cv" name="potencia_cv" required /></label><br>
+            <label>Precio dia: <input type="PutdiPrecio_dia" id="PutdiPrecio_dia" name="precio_dia" required /></label><br>
+            <button type="submit">Actualizar el vehiculo</button>
             <button class="closeButtonModal">Cerrar</button>
         </form>
     </dialog>
 
+    <!-- DialogVehiculo -->               
+    <dialog id="PostdialogVehiculo">
+        <!-- span class="closeButtonModal close">&times;</span -->
+        <h2 id="modalTitle">Crear Vehículo</h2>
+        <form id="registerForm"  onsubmit="event.preventDefault(); registrarVehiculo();">
+            <input type="hidden" id="diVehiculoId" />
+            <div class="form-group">
+                <label for="color">Color: </label>
+                <input type="text" id="Postcolor" name="color" required /> 
+            </div>
+            <div class="form-group">
+                <label for="marca">Marca: 
+                <input type="text" id="Postmarca" name="marca" required />
+            </div>
+          
+            <div class="form-group">
+                <label for="matricula">Matricula: 
+                <input type="text" id="Postmatricula" name="matricula" required />
+            </div>
+            
+
+            <div class="form-group">
+                <label for="autonomia_km">Puertas:</label> 
+                <input type="number" id="Postpuertas" required /><br>
+            </div>
+            <div class="form-group">
+                <label for="autonomia_km">Autonomía (km): </label>
+                <input type="number" id="Postautonomia_km" name="autonomia_km"required />
+            </div>
+            <div class="form-group">
+                <label for="potencia_cv">Potencia (cv): </label>
+                <input type="number" id="Postpotencia_cv" name="potencia_cv" required /><br>    
+            </div>
+            <div class="form-group">
+                <label for="precio_dia">Precio_dia: </label>
+                <input type="number" id="Postprecio_dia" name="precio_dia" required /><br>
+            </div>
+            <div class="form-group">
+                <button type="submit">Crear </button>
+                <button class="closeButtonModal">Cerrar</button>
+            </div>
+        </form>
+    </dialog>
+
     <div th:replace="~{fragments/footer}"></div>
+   
 </body>
 </html>

@@ -9,56 +9,60 @@ import com.FoodSpringApp.FoodSpringApp.model.Vehiculo;
 import com.FoodSpringApp.FoodSpringApp.repository.VehiculoRepository;
 
 @Service
-public class VehiculoService{
+public class VehiculoService{ 
 
     @Autowired
     private VehiculoRepository  vehiculoRepository;
 
-    public List<Vehiculo> obtenerTodosVehiculos() {
-        return vehiculoRepository.findAll();
+    public VehiculoService(VehiculoRepository vehiculoRepository) {
+        this.vehiculoRepository = vehiculoRepository;
     }
-    /**
-     * para actualizar el vehiculo
-     * @param vehiculo
-     * @return
-     */
+ 
     public Vehiculo save(Vehiculo vehiculo) {
         return vehiculoRepository.save(vehiculo);
     }
+    public List<Vehiculo> obtenerTodosVehiculos() {
+        return vehiculoRepository.findAll();
+    }
+    
+    public List<Vehiculo> findAll() {
+        return vehiculoRepository.findAll();
+    }
+
 
 
     public Vehiculo findById(int id) {
         return vehiculoRepository.findById(id).orElse(null);
     }
 
-
-    /**
-     * 
-     */
+/**
+ * 
+ * @param id identificador unico del vehiculo
+ * @param vehiculoData con los datos a actualizar
+ * @return
+ */
     public Vehiculo update(int id, Vehiculo vehiculoData) {
- /* 
-    * 
-id	int(11)
-color	varchar(255)
-marca	varchar(255)
-matricula	varchar(10)
-puertas	int(11)
-autonomia_km	int(11)
-potencia_cv	int(11)
-   */
   
-        Vehiculo vehiculo = findById(id);
-        if (vehiculo != null) {
-            vehiculo.setAutonomia_km(vehiculoData.getAutonomia_km());
-            vehiculo.setColor(vehiculoData.getColor());
-            vehiculo.setMarca(vehiculoData.getMarca());
-            vehiculo.setMatricula(vehiculoData.getMatricula());
-            vehiculo.setPotencia_cv(vehiculoData.getPotencia_cv());
-            vehiculo.setPuertas(vehiculoData.getPuertas());
-
-            return vehiculoRepository.save(vehiculo);
-        }
-    
+        try {
+            Vehiculo vehiculoExistente = vehiculoRepository.findById(id).orElse(null);
+            if (vehiculoExistente == null) {
+                return null;
+            }
+ 
+                vehiculoExistente.setAutonomia_km(vehiculoData.getAutonomia_km());
+                vehiculoExistente.setColor(vehiculoData.getColor());
+                vehiculoExistente.setMarca(vehiculoData.getMarca());
+                vehiculoExistente.setMatricula(vehiculoData.getMatricula());
+                vehiculoExistente.setPotencia_cv(vehiculoData.getPotencia_cv());
+                vehiculoExistente.setPuertas(vehiculoData.getPuertas());
+                vehiculoExistente.setPrecio_dia(vehiculoData.getPrecio_dia());
+                
+                return vehiculoRepository.save(vehiculoExistente);
+ 
+        } catch (Exception e) {
+            String serror=     e.getMessage();
+            System.err.println(serror);
+          }
         return null; // O lanza una excepción si no existe
     }
 
