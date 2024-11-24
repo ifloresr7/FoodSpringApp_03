@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.FoodSpringApp.FoodSpringApp.model.Usuario;
+import com.FoodSpringApp.FoodSpringApp.service.AlquilerService;
 import com.FoodSpringApp.FoodSpringApp.service.UsuarioService;
 import com.FoodSpringApp.FoodSpringApp.service.VehiculoService;
 
@@ -20,8 +21,10 @@ public class AppController {
     private UsuarioService usuarioService;
     @Autowired
     private VehiculoService vehiculoService;
+    @Autowired
+    private AlquilerService alquilerService;
 
-    private String version = "2024.11.22.18.21";
+    private String version = "2024.11.22.19.22";
 
     @GetMapping("/")
     public String homePage(Model model) {
@@ -72,8 +75,11 @@ public class AppController {
         } else if (principal instanceof String) {
             dni = principal.toString();
         }
+
+        System.out.println(alquilerService.obtenerAlquileresPorCliente(usuarioService.obtenerUsuarioPorDni(dni).getId()));
         model.addAttribute("usuarioID", usuarioService.obtenerUsuarioPorDni(dni).getId());
         model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
+        model.addAttribute("alquileres", alquilerService.obtenerAlquileresPorCliente(usuarioService.obtenerUsuarioPorDni(dni).getId()));
         model.addAttribute("version", this.version);
         model.addAttribute("title", "Mis alquileres");
         model.addAttribute("description", "Estos son todos mis alquileres.");
@@ -85,6 +91,9 @@ public class AppController {
     @GetMapping("/gestion-alquileres")
     public String alquileresPage(Model model) {
         model.addAttribute("version", this.version);
+        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculos());
+        model.addAttribute("alquileres", alquilerService.obtenerTodosAlquileres());
+        model.addAttribute("usuarios", usuarioService.obtenerTodosUsuarios());
         model.addAttribute("title", "Gestión de alquileres");
         model.addAttribute("description", "Aquí puedes ver todos los alquileres.");
         model.addAttribute("currentPage", "gestion-alquileres");

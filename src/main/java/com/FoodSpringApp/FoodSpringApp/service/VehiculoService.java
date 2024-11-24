@@ -69,5 +69,5 @@ public class VehiculoService{
     public void deleteById(int id) {
         vehiculoRepository.deleteById(id);
     }
-    
+
 }

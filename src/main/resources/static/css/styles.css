@@ -356,7 +356,16 @@ dialog::backdrop {
     backdrop-filter: blur(3px);
 }
 
-#mis_alquileres{
+#crearAlquilerDialog{
+    dialog#PostdialogUsuario form {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 0.5rem;
+    }
+    
+    dialog#PostdialogUsuario {
+        background-color: #e0e0e0;
+    }
     .grid {
         display: grid;
         grid-template-columns: 200px 200px;
@@ -509,4 +518,15 @@ nav.user_bar {
     color: #ffffff;
     border-radius: 0 0 1rem 1rem;
     justify-content: flex-end;
+}
+
+#page_gest_user{
+    form{
+        display: grid;
+        grid-template-columns: auto auto;
+        gap:0.4rem;
+    }
+    #PostdialogUsuario{
+        background-color: #e2e2e2;
+    }
 }
