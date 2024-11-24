@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -84,5 +85,15 @@ public class AlquilerController {
         return ResponseEntity.ok(alquileres);
     }
     
+    @PutMapping("/actualizar-alquiler")
+    public ResponseEntity<?> actualizarAlquiler(@RequestBody Alquiler alquilerData) {
+        try {
+            Alquiler actualizado = alquilerService.update(alquilerData);
+            return ResponseEntity.ok(actualizado);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body("Error al actualizar el alquiler: " + e.getMessage());
+        }
+    }
 
 }
