@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
     <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
-    <script th:src="@{/js/vehiculos.js(v=${version})}" defer></script>
+    <script th:src="@{/js/gestion_vehiculos.js(v=${version})}" defer></script>
 </head>
 <body>
     <div th:replace="~{fragments/header}"></div>
     <main class="content">
         <h1 th:text="${title}"></h1>
         <p th:text="${description}"></p>
-        <button class="createButton">Añadir Nuevo Vehículo</button>
+        <button id="createButton" class="createButton">Añadir Nuevo Vehículo</button>
         <!-- Tabla de vehículos -->
         <table>
             <thead>
@@ -28,7 +28,8 @@
                 </tr>
             </thead>
             <tbody id="vehiculosTable">
-            <tr th:each="vehiculo: ${vehiculos}">
+           <tr th:each="vehiculo: ${vehiculos}" th:data-id="${vehiculo.id}">
+           
                 <td th:text="${vehiculo.id}"></td>
                 <td th:text="${vehiculo.color}"></td>
                 <td th:text="${vehiculo.marca}"></td>
@@ -38,26 +39,68 @@
                 <td th:text="${vehiculo.potencia_cv}"></td>
                 <td th:text="${vehiculo.precio_dia}"></td> 
                 <td>
-                    <button class="editButton" id="vehiculoModal" onclick="cargarVehiculos()">Editar</button>                     
+                    <button class="editButton">Editar</button>
+                    <button class="deleteButton">Eliminar</button>
                 </td>
             </tr>
             </tbody>
         </table>
     </main>
-    <!-- DialogVehiculo -->
-    <dialog id="vehiculoModal">
-        <span class="closeButtonModal close">&times;</span>
-        <h2 id="modalTitle">Agregar / Actualizar Vehículo</h2>
-        <form id="vehiculoForm">
-            <input type="hidden" id="diVehiculoId" />
-            <label>Color: <input type="text" id="diColor" required /></label><br>
-            <label>Marca: <input type="text" id="diMarca" required /></label><br>
-            <label>Puertas: <input type="number" id="diPuertas" required /></label><br>
-            <label>Autonomía (km): <input type="number" id="diAutonomia_km" required /></label><br>
-            <label>Potencia (cv): <input type="number" id="diPotencia_cv" required /></label><br>
-            <label>Precio_dia: <input type="number" id="diPrecio_dia" required /></label><br>
-            <button type="submit">Crear / Actualizar</button>
+
+     <!-- DialogUsuario -->  
+     <h2 id="modalTitle">Actualizar datos del Vehiculo:</h2>
+     <dialog id="PutdialogVehiculo">        
+        <h2 id="modalTitle">Actualizar datos del Vehiculo:</h2>
+        <form id="vehiculoFormUpdate" method="post">
+            <input type="hidden" id="PutdiClienteId" name="id"/>
+            <label>Color: <input type="text" id="PutdiColor" name="color" required/></label><br>
+            <label>Marca: <input type="text" id="PutdiMarca" name="marca" required/></label><br>
+            <label>Puertas: <input type="text" id="PutdiPuertas" name="puertas" required/></label><br>
+            <label>Autonomia_km: <select id="PutdiAutonomia_km" name="autonomia_km" required>
+            <label>Potencia_cv: <input type="PutdiPotencia_cv" id="PutdiEmail" name="potencia_cv" required /></label><br>
+            
+            <button type="submit">Actualizar el perfil</button>
             <button class="closeButtonModal">Cerrar</button>
+        </form>
+    </dialog>
+
+
+
+
+    <!-- DialogVehiculo -->               
+    <dialog id="PostdialogVehiculo">
+        <!-- span class="closeButtonModal close">&times;</span -->
+        <h2 id="modalTitle">Agregar / Actualizar Vehículo</h2>
+        <form id="registerForm"  onsubmit="event.preventDefault(); registrarVehiculo();">
+            <input type="hidden" id="diVehiculoId" />
+            <div class="form-group">
+                <label for="color">Color: </label>
+                <input type="text" id="diColor" name="color" required /> 
+            </div>
+            <div class="form-group">
+                <label for="marca">Marca: 
+                <input type="text" id="diMarca" name="marca" required />
+            </div>
+            <div class="form-group">
+                <label for="autonomia_km">Puertas:</label> 
+                <input type="number" id="diPuertas" required /><br>
+            </div>
+            <div class="form-group">
+                <label for="autonomia_km">Autonomía (km): </label>
+                <input type="number" id="diAutonomia_km" name="autonomia_km"required />
+            </div>
+            <div class="form-group">
+                <label for="potencia_cv">Potencia (cv): </label>
+                <input type="number" id="diPotencia_cv" name="potencia_cv" required /><br>    
+            </div>
+            <div class="form-group">
+                <label for="precio_dia">Precio_dia: </label>
+                <input type="number" id="diPrecio_dia" name="precio_dia" required /><br>
+            </div>
+            <div class="form-group">
+                <button type="submit">Crear / Actualizar</button>
+                <button class="closeButtonModal">Cerrar</button>
+            </div>
         </form>
     </dialog>
 
