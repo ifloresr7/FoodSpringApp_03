@@ -23,11 +23,10 @@ public class VehiculoController {
     @Autowired
     private VehiculoService vehiculoService;
 
-   @PostMapping("/save-vehiculos")
+   @PostMapping("/save-vehiculo")
     public ResponseEntity<Map<String, String>> guardarVehiculo(@RequestBody Vehiculo vehiculo) {
         Map<String, String> response = new HashMap<>();
         try {
-          
             Vehiculo nuevoVehiculo = vehiculoService.save(vehiculo);
             response.put("message", "vehiculo registrado con éxito.");
             return ResponseEntity.ok(response);

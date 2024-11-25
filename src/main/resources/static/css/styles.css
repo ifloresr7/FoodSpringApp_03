@@ -39,6 +39,18 @@ body {
     min-height: 100vh;
     user-select: none;
 }
+header a{
+    display: flex;
+}
+header .inline {
+    display: flex;
+    gap: 0.2rem;
+    align-items: center;
+}
+
+header .inline svg{
+     width: 2rem;
+}
 
 #landingPage{
     background-image: url(/images/Background.png);
@@ -190,6 +202,13 @@ header .loginLink{
     color: white;
 }
 
+header .registerLink{
+    padding: 0.4rem 2rem;
+    background: linear-gradient(45deg, #8d8d8d, #b1b1b1);
+    border-radius: 0.5rem;
+    color: white;
+}
+
 header nav ul {
     display: flex;
     gap: 1.5rem;
@@ -224,7 +243,7 @@ footer p {
 }
 
 .vehiculosPage{
-    .inline img {
+    .inline .column img {
         width: 25px;
     }
     
@@ -257,28 +276,68 @@ footer p {
         justify-content: space-around;
         margin-top: 2rem;
     }
+
+    .animacion_coche {
+        width: 500px;
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+        background-color: #eee;
+    }
     
-    .car-card>.inline>img {
-        width: 250px;
-        animation: car_move 3s infinite ease-in-out;
+    .animacion_coche svg {
+        position: absolute;
+        width: 290px;
+        animation: car_move 10s infinite ease-in-out;
+        bottom: -22px;
+    }
+    
+
+    .alboleda {
+        width: 1120px;
+        position: absolute;
+        max-width: 1120px;
+        bottom: 0;
+        animation: moverAlboleda 10s linear infinite;
+        border-bottom: 5px dashed;
     }
 }
 
+@keyframes moverAlboleda {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-500px);
+    }
+}
+    
 @keyframes car_move {
     0% {
         transform: translateX(-100px);
         opacity: 0;
     }
+    10% {
+        transform: translateX(150px);
+        opacity: 1;
+    }
+    30%{
+        transform: translateX(10px);
+        opacity: 1;
+    }
     50% {
-        transform: translateX(0);
+        transform: translateX(2000);
+        opacity: 1;
+    }
+    70%{
+        transform: translateX(150px);
         opacity: 1;
     }
     100% {
-        transform: translateX(100px);
+        transform: translateX(500px);
         opacity: 0;
     }
 }
-
 footer span {
     font-size: 0.8rem;
     font-weight: 300;
@@ -453,7 +512,7 @@ td button {
     margin: 2px;
 }
 
-
+input[type=color] {padding: 0;}
 
 /* Estilo para los campos del formulario */
 .form-group {
@@ -494,7 +553,7 @@ button {
     transition: background-color 0.3s ease;
 }
 
-/* Estilo al pasar el mouse sobre el botÃ³n */
+/* Estilo al pasar el mouse sobre el botÃƒÂ³n */
 button:hover {
     background-color: #45a049;
 }
@@ -529,4 +588,14 @@ nav.user_bar {
     #PostdialogUsuario{
         background-color: #e2e2e2;
     }
+}
+
+td button {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+td button svg {
+    width: 1.7rem;
 }

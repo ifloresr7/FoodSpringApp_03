@@ -43,10 +43,10 @@ document.getElementById('PutdialogVehiculo').addEventListener('submit', function
         color: PutdiColor,
         matricula: PutdiMatricula,
         marca: PutdiMarca,
-        puertads: PutdiPuertas,        
+        puertas: PutdiPuertas,        
         autonomia_km: PutdiAutonomia_km,
         potencia_cv: PutdiPotencia_cv,
-        Precio_dia: PutdiPrecio_dia  
+        precio_dia: PutdiPrecio_dia  
     };
 
     fetch('/api/vehiculos/update-vehiculo', {
@@ -126,7 +126,6 @@ function registrarVehiculo() {
         autonomia_km: document.getElementById('Postautonomia_km').value,
         potencia_cv: document.getElementById('Postpotencia_cv').value,
         precio_dia: document.getElementById('Postprecio_dia').value,
-        
     };
     
     fetch('/api/vehiculos/save-vehiculo', {
@@ -141,14 +140,12 @@ function registrarVehiculo() {
         if (data.message) {
             alert(data.message);
         } else {
-            document.getElementById('error-message').style.display = 'block';
-            document.getElementById('error-message').textContent = 'Hubo un error al registrar el vehiculo.';
+           alert('Hubo un error al registrar el vehiculo.');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        document.getElementById('error-message').style.display = 'block';
-        document.getElementById('error-message').textContent = 'Hubo un error al registrar el vehiculo.';
+        alert('Hubo un error al registrar el vehiculo. CatchError');
     })
     .finally(() => {
         window.location.reload();

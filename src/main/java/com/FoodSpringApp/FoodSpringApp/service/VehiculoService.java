@@ -21,6 +21,7 @@ public class VehiculoService{
     public Vehiculo save(Vehiculo vehiculo) {
         return vehiculoRepository.save(vehiculo);
     }
+    
     public List<Vehiculo> obtenerTodosVehiculos() {
         return vehiculoRepository.findAll();
     }

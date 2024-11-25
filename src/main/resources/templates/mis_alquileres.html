@@ -7,6 +7,7 @@
     <meta name="description" th:content="${description}" />
     <link rel="stylesheet" th:href="@{/css/styles.css(v=${version})}" />
     <script th:src="@{/js/mis_alquileres.js(v=${version})}" defer></script>
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -15,6 +16,7 @@
         <h1 th:text="${title}"></h1>
         <p th:text="${description}"></p>
         <button class="createButton">Crear nuevo alquiler</button>
+        <p>La edición de estos alquileres debe hacerla un administrador.</p>
         <table id="tablaAlquileres">
             <thead>
                 <tr>
